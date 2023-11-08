@@ -7,7 +7,7 @@ public partial class Loading : BaseScene
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		var util = GetNode<NodeUtil>("/root/NodeUtil");
+		var util = GetNode<NodeUtil>(AutoLoad.NODE_UTIL);
 		util.LoadScene(SceneId.MAIN);
 	}
 

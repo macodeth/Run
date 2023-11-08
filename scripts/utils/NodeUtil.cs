@@ -17,5 +17,4 @@ public partial class NodeUtil : Node {
         GetTree().ChangeSceneToFile(sceneName);
         StaticUtil.Log("Loading " + sceneName);
     }
-
 }

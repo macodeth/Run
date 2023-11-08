@@ -4,7 +4,10 @@ using System;
 
 public abstract class PlayerState
 {
-	public abstract PlayerState HandleInput (Player player, InputType type);
+	public abstract PlayerState HandleInput (Player player, InputEventType type);
+	public virtual PlayerState HandleEvent (EventType type) {
+		return this;
+	}
 	public abstract void Enter (Player player);
 }
 
@@ -12,13 +15,15 @@ public class PlayerIdleState : PlayerState {
 	public override void Enter (Player player) {
 		player.Idle();
 	}
-	public override PlayerState HandleInput (Player player, InputType type) {
+	public override PlayerState HandleInput (Player player, InputEventType type) {
 		switch (type) {
-			case InputType.LEFT_PRESSED:
+			case InputEventType.LEFT_JUST_PRESSED:
+			case InputEventType.LEFT_STILL_PRESSED:
 				return new PlayerRunState(MoveDirection.LEFT);
-			case InputType.RIGHT_PRESSED:
+			case InputEventType.RIGHT_JUST_PRESSED:
+			case InputEventType.RIGHT_STILL_PRESSED:
 				return new PlayerRunState(MoveDirection.RIGHT);
-			case InputType.UP:
+			case InputEventType.UP:
 				return new PlayerJumpState();
 		}
 		return null;
@@ -35,25 +40,25 @@ public class PlayerRunState : PlayerState {
     public PlayerRunState (MoveDirection direction) {
 		_direction = direction;
 	}
-	public override PlayerState HandleInput (Player player, InputType type) {
+	public override PlayerState HandleInput (Player player, InputEventType type) {
 		switch (type) {
-			case InputType.LEFT_PRESSED:
+			case InputEventType.LEFT_JUST_PRESSED:
 				return new PlayerRunState(MoveDirection.LEFT);
-			case InputType.RIGHT_PRESSED:
+			case InputEventType.RIGHT_JUST_PRESSED:
 				return new PlayerRunState(MoveDirection.RIGHT);
-			case InputType.LEFT_RELEASED:
+			case InputEventType.LEFT_RELEASED:
 				if (player.Direction == MoveDirection.LEFT) {
 					return new PlayerIdleState();
 				} else {
 					return null;
 				}
-			case InputType.RIGHT_RELEASED:
+			case InputEventType.RIGHT_RELEASED:
 				if (player.Direction == MoveDirection.RIGHT) {
 					return new PlayerIdleState();
 				} else {
 					return null;
 				}
-			case InputType.UP:
+			case InputEventType.UP:
 				return new PlayerJumpState();
 		}
 		return null;
@@ -65,7 +70,15 @@ public class PlayerJumpState : PlayerState {
     {
 		player.Jump();
     }
-    public override PlayerState HandleInput (Player player, InputType type) {
-		return new PlayerIdleState();
+    public override PlayerState HandleEvent(EventType type)
+    {
+		switch (type) {
+			case EventType.JUMP_FINISHED:
+				return new PlayerIdleState();
+		}
+		return this;
+    }
+    public override PlayerState HandleInput (Player player, InputEventType type) {
+		return null;
 	}
 }

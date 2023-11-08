@@ -10,7 +10,16 @@ public class AssetPath {
     public const string TEXTURES = "res://textures/";
 }
 
+public class AutoLoad {
+    public const string NODE_UTIL = "/root/NodeUtil/";
+    public const string INPUT_SYSTEM = "/root/InputSystem/";
+}
+
 public enum MoveDirection {
     LEFT,
     RIGHT,
+}
+
+public enum EventType {
+    JUMP_FINISHED
 }
