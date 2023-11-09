@@ -4,11 +4,16 @@ using System;
 
 public abstract class PlayerState
 {
-	public abstract PlayerState HandleInput (Player player, InputEventType type);
+	public virtual PlayerState HandleInput (Player player, InputEventType type) {
+		return null;
+	}
 	public virtual PlayerState HandleEvent (EventType type) {
 		return this;
 	}
 	public abstract void Enter (Player player);
+	public virtual PlayerState Exit () {
+		return null;
+	}
 }
 
 public class PlayerIdleState : PlayerState {
@@ -25,6 +30,8 @@ public class PlayerIdleState : PlayerState {
 				return new PlayerRunState(MoveDirection.RIGHT);
 			case InputEventType.UP:
 				return new PlayerJumpState();
+			case InputEventType.RESET_PRESSED:
+				return new PlayerDieState();
 		}
 		return null;
 	}
@@ -79,6 +86,36 @@ public class PlayerJumpState : PlayerState {
 		return this;
     }
     public override PlayerState HandleInput (Player player, InputEventType type) {
+		switch (type) {
+			case InputEventType.LEFT_JUST_PRESSED:
+			case InputEventType.LEFT_STILL_PRESSED:
+				player.Direction = MoveDirection.LEFT;
+				player.SetHVelocity(true);
+				return null;
+			case InputEventType.RIGHT_JUST_PRESSED:
+			case InputEventType.RIGHT_STILL_PRESSED:
+				player.Direction = MoveDirection.RIGHT;
+				player.SetHVelocity(true);
+				return null;
+		}
 		return null;
 	}
+}
+
+public class PlayerDieState : PlayerState {
+    public override void Enter(Player player)
+    {
+		player.Die();
+    }
+}
+
+public class PlayerAppearState : PlayerState {
+    public override void Enter(Player player)
+    {
+		player.Appear();
+    }
+    public override PlayerState Exit()
+    {
+		return new PlayerIdleState();
+    }
 }

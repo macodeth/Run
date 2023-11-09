@@ -9,10 +9,11 @@ public partial class Player : CharacterBody2D
 	private MoveDirection _direction;
 	private double _velocity_x = 0;
 	private double _velocity_y = 0;
-	private double _y_before_jump = 0;
+	private double _gravity = 0;
 	private readonly double MOVE_VELOCITY = 300f;
-	private readonly double JUMP_VELOCITY = 350f;
-	private readonly double GRAVITY = 600.0f;
+	private readonly double JUMP_VELOCITY = - 350f;
+	private readonly double GRAVITY = 800.0f;
+	private readonly double JERK = 400.0f;
 	public MoveDirection Direction {
 		get => _direction;
 		set {
@@ -28,34 +29,29 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		_anim = GetNode<AnimatedSprite2D>("sprite");
-		_state = new PlayerIdleState();
+		ChangeState(new PlayerAppearState());
 		_direction = MoveDirection.RIGHT;
-		Idle();
+		_gravity = GRAVITY;
 		var inputSystem = GetNode<InputSystem>("/root/InputSystem/");
 		inputSystem.ButtonPressed += InputProcess;
 		JumpFinished += JumpFinishedHandler;
+		_anim.AnimationFinished += AnimationFinishedHandler;
 	}
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
 		double velocity = _velocity_x;
 		if (_direction == MoveDirection.LEFT)
 			velocity = -velocity;
-		double newX = velocity * delta + Position.X;
-		if (_state is PlayerIdleState || _state is PlayerRunState) {
-			Position = new Vector2((float)newX, Position.Y);
-			return;
-		}
-		_velocity_y -= GRAVITY * delta;
-		double newY = 0;
-		if ((_velocity_y < -JUMP_VELOCITY)
-			&& (_state is PlayerJumpState)) {
+		_gravity += JERK * delta;
+		if (_gravity > GRAVITY)
+			_gravity = GRAVITY;
+		_velocity_y += _gravity * delta;
+		Velocity = new Vector2((float)velocity, (float)_velocity_y);
+		MoveAndSlide();
+		if (IsOnFloor()) {
 			_velocity_y = 0;
-			newY = _y_before_jump;
 			EmitSignal(SignalName.JumpFinished);
-		} else {
-			newY = Position.Y - _velocity_y * delta + 0.5 * GRAVITY * delta * delta;
 		}
-		Position = new Vector2((float)newX, (float)newY);
     }
 
     private void ChangeState (PlayerState state) {
@@ -71,6 +67,7 @@ public partial class Player : CharacterBody2D
 	}
 	public void setVVelocity (bool isSet) {
 		_velocity_y = isSet ? JUMP_VELOCITY : 0;
+		_gravity = 500;
 	}
 	public void SetHVelocity (bool isSet) {
 		_velocity_x = isSet ? MOVE_VELOCITY : 0;
@@ -86,13 +83,24 @@ public partial class Player : CharacterBody2D
 	public void Jump () {
 		setVVelocity(true);
 		_anim.Play("Jump");
-		_y_before_jump = Position.Y;
+	}
+	public void Die () {
+		SetHVelocity(false);
+		setVVelocity(false);
+		_anim.Play("Die");
+	}
+	public void Appear () {
+		_anim.Play("Appear");
 	}
 	[Signal]
 	public delegate void JumpFinishedEventHandler();
 	private void JumpFinishedHandler () {
 		StaticUtil.Log("jump finished");
 		PlayerState state = _state.HandleEvent(EventType.JUMP_FINISHED);
+		ChangeState(state);
+	}
+	private void AnimationFinishedHandler () {
+		PlayerState state = _state.Exit();
 		ChangeState(state);
 	}
 }
