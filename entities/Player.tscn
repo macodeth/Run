@@ -301,9 +301,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dtwwl"]
-radius = 21.542
-height = 53.358
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fnito"]
+size = Vector2(38, 48)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(189.458, 313.321)
@@ -312,11 +311,12 @@ script = ExtResource("1_3eypx")
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_k8h0q")
-animation = &"Run"
+animation = &"Idle"
 speed_scale = 2.0
 
 [node name="collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_dtwwl")
+position = Vector2(0.542007, 7.67899)
+shape = SubResource("RectangleShape2D_fnito")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

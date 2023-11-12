@@ -30,6 +30,7 @@ public enum EventType {
 public class GroupName {
     public const string PLAYER = "Player";
     public const string TOP_BREAKABLE = "TopBreakable";
+    public const string FRUIT = "Fruit";
 }
 
 public enum LayerId {

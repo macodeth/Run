@@ -1,6 +1,7 @@
 using Enum;
 using Godot;
 using System;
+using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
@@ -66,6 +67,10 @@ public partial class Player : CharacterBody2D
 				if (collision.GetNormal().Y < 0) {
 					box.Hit();
 				}
+			}
+			if (collider.IsInGroup(GroupName.FRUIT)) {
+				var fruit = collider as Fruit;
+				fruit.QueueFree();
 			}
 		}
     }

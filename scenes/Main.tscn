@@ -1,12 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bed1aq6en3oaf"]
+[gd_scene load_steps=8 format=3 uid="uid://bed1aq6en3oaf"]
 
 [ext_resource type="Script" path="res://scripts/scenes/Main.cs" id="1_dkl8m"]
 [ext_resource type="Shader" path="res://shaders/AnimatedBkg.gdshader" id="2_1rc5k"]
 [ext_resource type="Texture2D" uid="uid://c72w1u88dl7h7" path="res://textures/Background/Green.png" id="3_rxtor"]
 [ext_resource type="FontFile" uid="uid://cpchih6j16l2y" path="res://fonts/Text (Black) (8x10).png" id="4_srd2a"]
+[ext_resource type="Texture2D" uid="uid://dt5k7ikodlsf6" path="res://textures/UI/btn.png" id="5_oyr85"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omy4d"]
 shader = ExtResource("2_1rc5k")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k0u85"]
+texture = ExtResource("5_oyr85")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -66,4 +74,8 @@ grow_vertical = 2
 scale = Vector2(4, 4)
 pivot_offset = Vector2(24, 9)
 theme_override_fonts/font = ExtResource("4_srd2a")
-text = "START"
+theme_override_styles/normal = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/focus = SubResource("StyleBoxTexture_k0u85")
+text = "PLAY"

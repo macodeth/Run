@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckwrapth4je6q"]
+[gd_scene load_steps=8 format=3 uid="uid://ckwrapth4je6q"]
 
 [ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_dgl37"]
 [ext_resource type="PackedScene" uid="uid://b0tbha1wn8n2l" path="res://entities/Player.tscn" id="4_qjjpa"]
 [ext_resource type="Texture2D" uid="uid://m74s0wwoi2v5" path="res://textures/Idle.png" id="5_8imrs"]
 [ext_resource type="PackedScene" uid="uid://cqtjkem1jq8f" path="res://entities/Start.tscn" id="6_1tu08"]
+[ext_resource type="PackedScene" uid="uid://e6nkoy41nvyq" path="res://entities/Box.tscn" id="6_tjdav"]
 [ext_resource type="PackedScene" uid="uid://qed3meyc8pes" path="res://entities/End.tscn" id="7_dacda"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0ym8"]
@@ -39,3 +40,7 @@ position = Vector2(182, 392)
 
 [node name="End" parent="." instance=ExtResource("7_dacda")]
 position = Vector2(1007, 392)
+
+[node name="Box" parent="." instance=ExtResource("6_tjdav")]
+position = Vector2(434, 413)
+TYPE = 1
