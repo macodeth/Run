@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://duavyw70uqi72"]
+
+[ext_resource type="FontFile" uid="uid://t8efcfvq0dfo" path="res://fonts/Text (White) (8x10).png" id="1_a1uqv"]
+[ext_resource type="Texture2D" uid="uid://dt5k7ikodlsf6" path="res://textures/UI/btn.png" id="2_f6oap"]
+[ext_resource type="Script" path="res://scripts/entities/LevelSelectButton.cs" id="3_e8hll"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dv60y"]
+texture = ExtResource("2_f6oap")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1dut"]
+texture = ExtResource("2_f6oap")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i5av1"]
+texture = ExtResource("2_f6oap")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u1iq7"]
+texture = ExtResource("2_f6oap")
+
+[node name="LevelSelectButton" type="Button"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+offset_right = 30.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("1_a1uqv")
+theme_override_font_sizes/font_size = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_dv60y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_b1dut")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i5av1")
+theme_override_styles/focus = SubResource("StyleBoxTexture_u1iq7")
+script = ExtResource("3_e8hll")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(20, 11)
+theme_override_fonts/font = ExtResource("1_a1uqv")
+horizontal_alignment = 1
+vertical_alignment = 1

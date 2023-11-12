@@ -90,12 +90,22 @@ public class PlayerJumpState : PlayerState {
 			case InputEventType.LEFT_JUST_PRESSED:
 			case InputEventType.LEFT_STILL_PRESSED:
 				player.Direction = MoveDirection.LEFT;
-				player.SetHVelocity(true);
+				player.SetMoveVelocity(true);
 				return null;
 			case InputEventType.RIGHT_JUST_PRESSED:
 			case InputEventType.RIGHT_STILL_PRESSED:
 				player.Direction = MoveDirection.RIGHT;
-				player.SetHVelocity(true);
+				player.SetMoveVelocity(true);
+				return null;
+			case InputEventType.LEFT_RELEASED:
+				if (player.Direction == MoveDirection.LEFT) {
+					player.SetMoveVelocity(false);
+				}
+				return null;
+			case InputEventType.RIGHT_RELEASED:
+				if (player.Direction == MoveDirection.RIGHT) {
+					player.SetMoveVelocity(false);
+				}
 				return null;
 		}
 		return null;

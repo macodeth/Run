@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/scenes/Loading.cs" id="1_x5xqj"]
 
-[node name="Loading" type="Node2D"]
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_x5xqj")

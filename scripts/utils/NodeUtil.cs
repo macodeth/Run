@@ -12,8 +12,16 @@ public partial class NodeUtil : Node {
             case SceneId.MAIN:
                 sceneName = "Main";
                 break;
+            case SceneId.SELECTION:
+                sceneName = "Selection";
+                break;
         }
         sceneName = AssetPath.SCENES + sceneName + ".tscn";
+        GetTree().ChangeSceneToFile(sceneName);
+        StaticUtil.Log("Loading " + sceneName);
+    }
+    public void LoadLevel (int level) {
+        var sceneName = AssetPath.SCENES + "Level" + level + ".tscn";
         GetTree().ChangeSceneToFile(sceneName);
         StaticUtil.Log("Loading " + sceneName);
     }

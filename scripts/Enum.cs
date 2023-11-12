@@ -2,12 +2,15 @@ namespace Enum;
 
 public enum SceneId {
     LOADING,
-    MAIN
+    MAIN,
+    SELECTION
 }
 
 public class AssetPath {
     public const string SCENES = "res://scenes/";
     public const string TEXTURES = "res://textures/";
+    public const string SHADERS = "res://shaders/";
+    public const string ENTITIES = "res://entities/";
 }
 
 public class AutoLoad {
@@ -22,4 +25,15 @@ public enum MoveDirection {
 
 public enum EventType {
     JUMP_FINISHED
+}
+
+public class GroupName {
+    public const string PLAYER = "Player";
+    public const string TOP_BREAKABLE = "TopBreakable";
+}
+
+public enum LayerId {
+    BACKGROUND = -1,
+    DEFAULT = 0,
+    UI = 1
 }

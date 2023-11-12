@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://n070hursb84o"]
+
+[ext_resource type="Script" path="res://scripts/scenes/Selection.cs" id="1_7wonb"]
+[ext_resource type="Shader" path="res://shaders/AnimatedBkg.gdshader" id="1_t7atd"]
+[ext_resource type="Texture2D" uid="uid://c72w1u88dl7h7" path="res://textures/Background/Green.png" id="2_8su24"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_li4w6"]
+shader = ExtResource("1_t7atd")
+
+[node name="Selection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7wonb")
+
+[node name="Bkg" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_li4w6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8su24")
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -35.0
+offset_right = 35.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 50
+
+[node name="ButtonContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+columns = 8

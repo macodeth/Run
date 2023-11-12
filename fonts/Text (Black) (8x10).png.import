@@ -1,0 +1,21 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://cpchih6j16l2y"
+path="res://.godot/imported/Text (Black) (8x10).png-c52c77c7d2f9b8b4cc43bc1b8bd4ac6a.fontdata"
+
+[deps]
+
+source_file="res://fonts/Text (Black) (8x10).png"
+dest_files=["res://.godot/imported/Text (Black) (8x10).png-c52c77c7d2f9b8b4cc43bc1b8bd4ac6a.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "44", "58", "63", "33", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "46", "40", "41", "43", "45")
+columns=10
+rows=5
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+fallbacks=[]
+compress=true

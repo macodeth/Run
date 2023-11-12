@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckwrapth4je6q"]
+
+[ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_dgl37"]
+[ext_resource type="PackedScene" uid="uid://b0tbha1wn8n2l" path="res://entities/Player.tscn" id="4_qjjpa"]
+[ext_resource type="Texture2D" uid="uid://m74s0wwoi2v5" path="res://textures/Idle.png" id="5_8imrs"]
+[ext_resource type="PackedScene" uid="uid://cqtjkem1jq8f" path="res://entities/Start.tscn" id="6_1tu08"]
+[ext_resource type="PackedScene" uid="uid://qed3meyc8pes" path="res://entities/End.tscn" id="7_dacda"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0ym8"]
+size = Vector2(1151, 20)
+
+[node name="Level1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dgl37")
+
+[node name="Player" parent="." instance=ExtResource("4_qjjpa")]
+position = Vector2(75, 371)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(574, 433)
+
+[node name="Idle" type="Sprite2D" parent="StaticBody2D"]
+texture_repeat = 2
+texture = ExtResource("5_8imrs")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2.5, 0)
+shape = SubResource("RectangleShape2D_n0ym8")
+
+[node name="Start" parent="." instance=ExtResource("6_1tu08")]
+position = Vector2(182, 392)
+
+[node name="End" parent="." instance=ExtResource("7_dacda")]
+position = Vector2(1007, 392)

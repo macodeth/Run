@@ -1,5 +1,5 @@
 using Godot;
 
-public partial class BaseScene: Node {
+public partial class BaseScene: Control {
     
 }

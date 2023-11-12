@@ -6,14 +6,17 @@ public partial class Player : CharacterBody2D
 {
 	private AnimatedSprite2D _anim;
 	private PlayerState _state;
+	private PlayerState _prev_state;
 	private MoveDirection _direction;
 	private double _velocity_x = 0;
 	private double _velocity_y = 0;
 	private double _gravity = 0;
 	private readonly double MOVE_VELOCITY = 300f;
 	private readonly double JUMP_VELOCITY = - 350f;
-	private readonly double GRAVITY = 800.0f;
-	private readonly double JERK = 400.0f;
+	private readonly double GRAVITY = 1200f;
+	private readonly double JERK = 600f;
+	// move slower while in the air
+	private readonly double MOVE_VELOCITY_AIR_RATIO = 0.7;
 	public MoveDirection Direction {
 		get => _direction;
 		set {
@@ -28,11 +31,12 @@ public partial class Player : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		AddToGroup(GroupName.PLAYER);
 		_anim = GetNode<AnimatedSprite2D>("sprite");
 		ChangeState(new PlayerAppearState());
 		_direction = MoveDirection.RIGHT;
 		_gravity = GRAVITY;
-		var inputSystem = GetNode<InputSystem>("/root/InputSystem/");
+		var inputSystem = GetNode<InputSystem>(AutoLoad.INPUT_SYSTEM);
 		inputSystem.ButtonPressed += InputProcess;
 		JumpFinished += JumpFinishedHandler;
 		_anim.AnimationFinished += AnimationFinishedHandler;
@@ -42,6 +46,8 @@ public partial class Player : CharacterBody2D
 		double velocity = _velocity_x;
 		if (_direction == MoveDirection.LEFT)
 			velocity = -velocity;
+		if (_state is PlayerJumpState) 
+			velocity *= MOVE_VELOCITY_AIR_RATIO;
 		_gravity += JERK * delta;
 		if (_gravity > GRAVITY)
 			_gravity = GRAVITY;
@@ -52,11 +58,21 @@ public partial class Player : CharacterBody2D
 			_velocity_y = 0;
 			EmitSignal(SignalName.JumpFinished);
 		}
+		for (int i = 0; i < GetSlideCollisionCount(); i++) {
+			var collision = GetSlideCollision(i);
+			var collider = collision.GetCollider() as Node;
+			if (collider.IsInGroup(GroupName.TOP_BREAKABLE) && _prev_state is PlayerJumpState) {
+				var box = collider as Box;
+				if (collision.GetNormal().Y < 0) {
+					box.Hit();
+				}
+			}
+		}
     }
 
     private void ChangeState (PlayerState state) {
 		if (state != null) {
-			StaticUtil.Log("state changed to " + state.GetType());
+			_prev_state = _state;
 			_state = state;
 			_state.Enter(this);
 		}
@@ -65,28 +81,28 @@ public partial class Player : CharacterBody2D
 		PlayerState state = _state.HandleInput(this, type);
 		ChangeState(state);
 	}
-	public void setVVelocity (bool isSet) {
+	public void SetJumpVelocity (bool isSet) {
 		_velocity_y = isSet ? JUMP_VELOCITY : 0;
 		_gravity = 500;
 	}
-	public void SetHVelocity (bool isSet) {
+	public void SetMoveVelocity (bool isSet) {
 		_velocity_x = isSet ? MOVE_VELOCITY : 0;
 	}
     public void Idle () {
-		SetHVelocity(false);
+		SetMoveVelocity(false);
 		_anim.Play("Idle");
 	}
 	public void Run () {
-		SetHVelocity(true);
+		SetMoveVelocity(true);
 		_anim.Play("Run");
 	}
 	public void Jump () {
-		setVVelocity(true);
+		SetJumpVelocity(true);
 		_anim.Play("Jump");
 	}
 	public void Die () {
-		SetHVelocity(false);
-		setVVelocity(false);
+		SetMoveVelocity(false);
+		SetJumpVelocity(false);
 		_anim.Play("Die");
 	}
 	public void Appear () {
@@ -95,7 +111,6 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void JumpFinishedEventHandler();
 	private void JumpFinishedHandler () {
-		StaticUtil.Log("jump finished");
 		PlayerState state = _state.HandleEvent(EventType.JUMP_FINISHED);
 		ChangeState(state);
 	}
