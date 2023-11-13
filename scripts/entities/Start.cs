@@ -12,9 +12,16 @@ public partial class Start : Area2D
 		Idle();
 		BodyEntered += BodyEnteredHandler;
 	}
+	private bool _is_start = false;
 	private void BodyEnteredHandler (Node2D body) {
-		if (body.IsInGroup(GroupName.PLAYER))
+		if (body.IsInGroup(GroupName.PLAYER)) {
+			if (!_is_start) {
+				var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+				gameSystem.EmitSignal(GameSystem.SignalName.GameStarted);
+			}
+			_is_start = true;
 			Moving();
+		}
 	}
 	private void Idle () {
 		_anim.Play("Idle");

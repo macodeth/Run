@@ -15,7 +15,7 @@ public partial class Player : CharacterBody2D
 	private readonly double MOVE_VELOCITY = 300f;
 	private readonly double JUMP_VELOCITY = - 350f;
 	private readonly double GRAVITY = 1200f;
-	private readonly double JERK = 600f;
+	private readonly double JERK = 2000f;
 	// move slower while in the air
 	private readonly double MOVE_VELOCITY_AIR_RATIO = 0.7;
 	public MoveDirection Direction {
@@ -32,11 +32,17 @@ public partial class Player : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Initialize();
+		AddEventHandlers();
+	}
+	private void Initialize () {
 		AddToGroup(GroupName.PLAYER);
 		_anim = GetNode<AnimatedSprite2D>("sprite");
 		ChangeState(new PlayerAppearState());
 		_direction = MoveDirection.RIGHT;
 		_gravity = GRAVITY;
+	}
+	private void AddEventHandlers () {
 		var inputSystem = GetNode<InputSystem>(AutoLoad.INPUT_SYSTEM);
 		inputSystem.ButtonPressed += InputProcess;
 		JumpFinished += JumpFinishedHandler;
@@ -59,6 +65,7 @@ public partial class Player : CharacterBody2D
 			_velocity_y = 0;
 			EmitSignal(SignalName.JumpFinished);
 		}
+		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
 		for (int i = 0; i < GetSlideCollisionCount(); i++) {
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider() as Node;
@@ -71,6 +78,7 @@ public partial class Player : CharacterBody2D
 			if (collider.IsInGroup(GroupName.FRUIT)) {
 				var fruit = collider as Fruit;
 				fruit.QueueFree();
+				gameSystem.EmitSignal(GameSystem.SignalName.FruitCollected, fruit.Score);
 			}
 		}
     }

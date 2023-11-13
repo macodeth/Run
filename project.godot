@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 NodeUtil="*res://scripts/utils/NodeUtil.cs"
 InputSystem="*res://scripts/systems/InputSystem.cs"
+GameSystem="*res://scripts/systems/GameSystem.cs"
 
 [display]
 

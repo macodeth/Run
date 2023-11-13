@@ -1,0 +1,156 @@
+[gd_scene load_steps=18 format=3 uid="uid://c70wxk27ah7b5"]
+
+[ext_resource type="Texture2D" uid="uid://btyrjviw6y4mc" path="res://textures/UI/overlay.png" id="1_3w2ug"]
+[ext_resource type="Script" path="res://scripts/popups/PanelResult.cs" id="2_8r6yi"]
+[ext_resource type="Texture2D" uid="uid://ta2k8evlxc11" path="res://textures/UI/popup.png" id="2_eqb1m"]
+[ext_resource type="Texture2D" uid="uid://6vhqn875jlt0" path="res://textures/UI/Levels.png" id="4_52bvn"]
+[ext_resource type="FontFile" uid="uid://cpchih6j16l2y" path="res://fonts/BlackFont.png" id="5_2wbss"]
+[ext_resource type="Texture2D" uid="uid://b0pjon1un10mi" path="res://textures/UI/Restart.png" id="5_4oufy"]
+[ext_resource type="Texture2D" uid="uid://bpphmtbjpgshi" path="res://textures/UI/Next.png" id="6_rlcr3"]
+[ext_resource type="PackedScene" uid="uid://c5xtxwj2k6qx1" path="res://entities/ScoreContainer.tscn" id="8_v0mmy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1a3mp"]
+texture = ExtResource("4_52bvn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dipag"]
+texture = ExtResource("5_4oufy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_40l2x"]
+texture = ExtResource("5_4oufy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nus44"]
+texture = ExtResource("5_4oufy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s0b0u"]
+texture = ExtResource("5_4oufy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rfl1l"]
+texture = ExtResource("6_rlcr3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg4wx"]
+texture = ExtResource("6_rlcr3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_82s01"]
+texture = ExtResource("6_rlcr3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdbpi"]
+texture = ExtResource("6_rlcr3")
+
+[node name="PanelResult" type="TextureRect" node_paths=PackedStringArray("BLevel", "BReplay", "BNext", "TResult", "TTime", "TScore")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3w2ug")
+script = ExtResource("2_8r6yi")
+BLevel = NodePath("Bkg/ButtonContainer/GridContainer/BLevel")
+BReplay = NodePath("Bkg/ButtonContainer/GridContainer/BReplay")
+BNext = NodePath("Bkg/ButtonContainer/GridContainer/BNext")
+TResult = NodePath("Bkg/TResult")
+TTime = NodePath("Bkg/TTime")
+TScore = NodePath("")
+
+[node name="Bkg" type="NinePatchRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.5
+offset_top = -105.0
+offset_right = 202.5
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_eqb1m")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="ButtonContainer" type="MarginContainer" parent="Bkg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 20
+
+[node name="GridContainer" type="GridContainer" parent="Bkg/ButtonContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+columns = 4
+
+[node name="BLevel" type="Button" parent="Bkg/ButtonContainer/GridContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_1a3mp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1a3mp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1a3mp")
+theme_override_styles/focus = SubResource("StyleBoxTexture_1a3mp")
+
+[node name="BReplay" type="Button" parent="Bkg/ButtonContainer/GridContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_dipag")
+theme_override_styles/hover = SubResource("StyleBoxTexture_40l2x")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nus44")
+theme_override_styles/focus = SubResource("StyleBoxTexture_s0b0u")
+
+[node name="BNext" type="Button" parent="Bkg/ButtonContainer/GridContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_rfl1l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hg4wx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_82s01")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mdbpi")
+
+[node name="TResult" type="Label" parent="Bkg"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 35.0
+offset_right = 60.0
+offset_bottom = 48.0
+grow_horizontal = 2
+scale = Vector2(2.2, 2.2)
+pivot_offset = Vector2(60, 6.5)
+theme_override_fonts/font = ExtResource("5_2wbss")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TTime" type="Label" parent="Bkg"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_top = 73.0
+offset_right = 61.0
+offset_bottom = 86.0
+grow_horizontal = 2
+scale = Vector2(2.2, 2.2)
+pivot_offset = Vector2(60, 6.5)
+theme_override_fonts/font = ExtResource("5_2wbss")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreContainer" parent="Bkg" instance=ExtResource("8_v0mmy")]
+layout_mode = 0
+anchors_preset = 0

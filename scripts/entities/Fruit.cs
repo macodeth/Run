@@ -16,10 +16,12 @@ enum FruitType {
 public partial class Fruit : Node
 {
 	[Export(PropertyHint.Enum, "APPLE:0, BANANA:1, CHERRIES:2, KIWI:3, MELON:4, ORANGE:5, PINEAPPLE:6, STRAWBERRY:7")]
-	private FruitType type;
+	private FruitType Type;
+	[Export]
+	public int Score = 5;
 	private AnimatedSprite2D _sprite;
 	private string Animation () {
-		switch (type) {
+		switch (Type) {
 			case FruitType.APPLE:
 				return "Apple";
 			case FruitType.BANANA:

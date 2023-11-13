@@ -29,7 +29,9 @@ public class PlayerIdleState : PlayerState {
 			case InputEventType.RIGHT_STILL_PRESSED:
 				return new PlayerRunState(MoveDirection.RIGHT);
 			case InputEventType.UP:
-				return new PlayerJumpState();
+				if (player.IsOnFloor())
+					return new PlayerJumpState();
+				return null;
 			case InputEventType.RESET_PRESSED:
 				return new PlayerDieState();
 		}
@@ -66,7 +68,9 @@ public class PlayerRunState : PlayerState {
 					return null;
 				}
 			case InputEventType.UP:
-				return new PlayerJumpState();
+				if (player.IsOnFloor())
+					return new PlayerJumpState();
+				return null;
 		}
 		return null;
 	}

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://r5imesx1eg6m"]
+
+[ext_resource type="FontFile" uid="uid://cpchih6j16l2y" path="res://fonts/BlackFont.png" id="1_c8qyr"]
+[ext_resource type="Script" path="res://scripts/entities/TimeHUD.cs" id="1_n2cw8"]
+
+[node name="TimeHUD" type="MarginContainer" node_paths=PackedStringArray("_label")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 23.0
+grow_horizontal = 0
+scale = Vector2(2.5, 2.5)
+pivot_offset = Vector2(50, 0)
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+script = ExtResource("1_n2cw8")
+_label = NodePath("Container/Label")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Container"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c8qyr")
+text = "00:00"
+horizontal_alignment = 2
+vertical_alignment = 1

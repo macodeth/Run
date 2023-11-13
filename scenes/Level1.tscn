@@ -43,4 +43,3 @@ position = Vector2(1007, 392)
 
 [node name="Box" parent="." instance=ExtResource("6_tjdav")]
 position = Vector2(434, 413)
-TYPE = 1

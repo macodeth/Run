@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://duavyw70uqi72"]
 
-[ext_resource type="FontFile" uid="uid://t8efcfvq0dfo" path="res://fonts/Text (White) (8x10).png" id="1_a1uqv"]
+[ext_resource type="FontFile" uid="uid://t8efcfvq0dfo" path="res://fonts/WhiteFont.png" id="1_a1uqv"]
 [ext_resource type="Texture2D" uid="uid://dt5k7ikodlsf6" path="res://textures/UI/btn.png" id="2_f6oap"]
 [ext_resource type="Script" path="res://scripts/entities/LevelSelectButton.cs" id="3_e8hll"]
 
