@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx2rr6s8qol1l"]
+
+[ext_resource type="Texture2D" uid="uid://wm1e64jxnfa1" path="res://textures/UI/heart.png" id="1_g0y7t"]
+
+[node name="Heart" type="TextureRect"]
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
+texture = ExtResource("1_g0y7t")
+stretch_mode = 5

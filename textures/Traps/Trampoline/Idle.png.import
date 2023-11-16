@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bviawqn1lqcxt"
-path="res://.godot/imported/Idle.png-f1a539ec2b3a7065727f59c910d64704.ctex"
+uid="uid://djdfx31yu8w41"
+path="res://.godot/imported/Idle.png-bf02aec8dec1fa535a6cdc65c18d1d7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/player/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-f1a539ec2b3a7065727f59c910d64704.ctex"]
+source_file="res://textures/Traps/Trampoline/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-bf02aec8dec1fa535a6cdc65c18d1d7e.ctex"]
 
 [params]
 

@@ -26,13 +26,15 @@ public enum MoveDirection {
 }
 
 public enum EventType {
-    JUMP_FINISHED
+    ON_FLOOR,
+    FALLING
 }
 
 public class GroupName {
     public const string PLAYER = "Player";
     public const string TOP_BREAKABLE = "TopBreakable";
     public const string FRUIT = "Fruit";
+    public const string CONTACT_DAMAGE = "ContactDamage";
 }
 
 public enum LayerId {

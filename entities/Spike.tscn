@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://vy0bng17p4r1"]
+
+[ext_resource type="Texture2D" uid="uid://bxlj1ecdpj4cy" path="res://textures/Traps/Spikes/Idle.png" id="1_qdedb"]
+[ext_resource type="Script" path="res://scripts/entities/Spike.cs" id="2_lsrql"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngakk"]
+size = Vector2(16, 12)
+
+[node name="Spike" type="StaticBody2D"]
+script = ExtResource("2_lsrql")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(2, 2)
+texture = ExtResource("1_qdedb")
+region_enabled = true
+region_rect = Rect2(0, 8, 8, 8)
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_ngakk")
+one_way_collision = true

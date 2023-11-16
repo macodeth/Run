@@ -1,0 +1,207 @@
+[gd_scene load_steps=9 format=3 uid="uid://bra7t3mtaiug5"]
+
+[ext_resource type="Script" path="res://scripts/entities/Trampoline.cs" id="1_6lbve"]
+[ext_resource type="Texture2D" uid="uid://cp7keauloiqe7" path="res://textures/Traps/Trampoline/Jump (28x28).png" id="1_tsk10"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqurp"]
+size = Vector2(42, 8)
+
+[sub_resource type="Animation" id="Animation_phx1n"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shape:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.5, 12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top/Shape2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.5, 8)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ObjectStay"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_sc7tv"]
+resource_name = "Push"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shape:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-0.5, 16), Vector2(-0.5, -22), Vector2(-0.5, -20), Vector2(-0.5, -12), Vector2(-0.5, 4), Vector2(-0.5, 12), Vector2(-0.5, 12)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"ObjectMove"
+}, {
+"args": [],
+"method": &"ObjectJump"
+}, {
+"args": [],
+"method": &"ObjectMove"
+}, {
+"args": [],
+"method": &"ObjectMove"
+}, {
+"args": [],
+"method": &"ObjectMove"
+}, {
+"args": [],
+"method": &"ObjectMove"
+}, {
+"args": [],
+"method": &"ObjectMove"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Top/Shape2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-0.5, 12), Vector2(-0.5, -26), Vector2(-0.5, -24), Vector2(-0.5, -16), Vector2(-0.5, 0), Vector2(-0.5, 8), Vector2(-0.5, 8)]
+}
+
+[sub_resource type="Animation" id="Animation_xk6y7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shape:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.5, 8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top/Shape2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.5, 8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pklx7"]
+_data = {
+"Idle": SubResource("Animation_phx1n"),
+"Push": SubResource("Animation_sc7tv"),
+"RESET": SubResource("Animation_xk6y7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2nor"]
+size = Vector2(41, 4)
+
+[node name="Trampoline" type="StaticBody2D"]
+script = ExtResource("1_6lbve")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_tsk10")
+hframes = 8
+frame = 7
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 8)
+shape = SubResource("RectangleShape2D_bqurp")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pklx7")
+}
+
+[node name="Top" type="Area2D" parent="."]
+
+[node name="Shape2" type="CollisionShape2D" parent="Top"]
+position = Vector2(-0.5, 8)
+shape = SubResource("RectangleShape2D_m2nor")

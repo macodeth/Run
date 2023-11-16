@@ -45,11 +45,15 @@ public partial class Level : BaseScene
         uiLayer.AddChild(_timeHUD);
 	}
     private void FruitCollectedHandler (int score) {
-
+        _score += score;
+        _heartHUD.SetScore(_score);
     }
     private Timer _timer;
+    private int _elapsed_seconds;
+    private bool _is_start = false;
     private void GameStartedHandler () {
         _start_time = DateTime.Now;
+        _is_start = true;
         _timer = new Timer
         {
             WaitTime = 0.5,
@@ -60,22 +64,43 @@ public partial class Level : BaseScene
         _timer.Start();
     }
     private int ElapsedSeconds () {
+        if (!_is_start)
+            return 0;
         var currentTime = DateTime.Now;
         var timeSpan = currentTime - _start_time;
         return (int)timeSpan.TotalSeconds;
     }
     private void TimerLoop () {
-        var elapsedSeconds = ElapsedSeconds();
-        _timeHUD.SetTime(elapsedSeconds);
+        _elapsed_seconds = ElapsedSeconds();
+        _timeHUD.SetTime(_elapsed_seconds);
     }
-    private void GameEndedHandler () {
+    private void GameWonHandler () {
         _timer.Stop();
+        AddPanelResult(true, _score, _elapsed_seconds);
+    }
+    private void GameLostHandler () {
+        _timer.Stop();
+        AddPanelResult(false, _score, _elapsed_seconds);
+    }
+    private void HeartLostHandler (int currentHP){
+        _heartHUD.SetHeart(currentHP);
     }
     private void AddEventHandlers () {
         var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
         gameSystem.FruitCollected += FruitCollectedHandler;
         gameSystem.GameStarted += GameStartedHandler;
-        gameSystem.GameEnded += GameEndedHandler;
+        gameSystem.GameWon += GameWonHandler;
+        gameSystem.GameLost += GameLostHandler;
+        gameSystem.HeartLost += HeartLostHandler;
+    }
+    public override void _ExitTree()
+    {
+        var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+        gameSystem.FruitCollected -= FruitCollectedHandler;
+        gameSystem.GameStarted -= GameStartedHandler;
+        gameSystem.GameWon -= GameWonHandler;
+        gameSystem.GameLost -= GameLostHandler;
+        gameSystem.HeartLost -= HeartLostHandler;
     }
 
 }

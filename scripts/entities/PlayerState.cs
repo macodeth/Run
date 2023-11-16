@@ -1,6 +1,7 @@
 using Enum;
 using Godot;
 using System;
+using System.Collections;
 
 public abstract class PlayerState
 {
@@ -11,7 +12,7 @@ public abstract class PlayerState
 		return this;
 	}
 	public abstract void Enter (Player player);
-	public virtual PlayerState Exit () {
+	public virtual PlayerState Exit (Player player) {
 		return null;
 	}
 }
@@ -37,6 +38,14 @@ public class PlayerIdleState : PlayerState {
 		}
 		return null;
 	}
+    public override PlayerState HandleEvent(EventType type)
+    {
+		switch (type) {
+			case EventType.FALLING:
+				return new PlayerFallState();
+		}
+		return this;
+    }
 }
 
 public class PlayerRunState : PlayerState {
@@ -74,6 +83,14 @@ public class PlayerRunState : PlayerState {
 		}
 		return null;
 	}
+	public override PlayerState HandleEvent(EventType type)
+    {
+		switch (type) {
+			case EventType.FALLING:
+				return new PlayerFallState();
+		}
+		return this;
+    }
 }
 
 public class PlayerJumpState : PlayerState {
@@ -81,15 +98,91 @@ public class PlayerJumpState : PlayerState {
     {
 		player.Jump();
     }
-    public override PlayerState HandleEvent(EventType type)
+
+    public override PlayerState HandleInput (Player player, InputEventType type) {
+		switch (type) {
+			case InputEventType.LEFT_JUST_PRESSED:
+			case InputEventType.LEFT_STILL_PRESSED:
+				player.Direction = MoveDirection.LEFT;
+				player.SetMoveVelocity(true);
+				return null;
+			case InputEventType.RIGHT_JUST_PRESSED:
+			case InputEventType.RIGHT_STILL_PRESSED:
+				player.Direction = MoveDirection.RIGHT;
+				player.SetMoveVelocity(true);
+				return null;
+			case InputEventType.LEFT_RELEASED:
+				if (player.Direction == MoveDirection.LEFT) {
+					player.SetMoveVelocity(false);
+				}
+				return null;
+			case InputEventType.RIGHT_RELEASED:
+				if (player.Direction == MoveDirection.RIGHT) {
+					player.SetMoveVelocity(false);
+				}
+				return null;
+		}
+		return null;
+	}
+	public override PlayerState HandleEvent(EventType type)
     {
 		switch (type) {
-			case EventType.JUMP_FINISHED:
+			case EventType.FALLING:
+				return new PlayerFallState();
+		}
+		return this;
+    }
+}
+
+public class PlayerDieState : PlayerState {
+    public override void Enter(Player player)
+    {
+		player.Die();
+    }
+    public override PlayerState Exit(Player player)
+    {
+		player.EndGame();
+		return null;
+    }
+}
+
+public class PlayerAppearState : PlayerState {
+    public override void Enter(Player player)
+    {
+		player.Appear();
+    }
+    public override PlayerState Exit(Player player)
+    {
+		return new PlayerIdleState();
+    }
+	public override PlayerState HandleEvent(EventType type)
+    {
+		switch (type) {
+			case EventType.FALLING:
+				return new PlayerFallState();
+		}
+		return this;
+    }
+}
+
+public class PlayerFallState : PlayerState {
+	public override void Enter(Player player) 
+	{
+		player.Fall();
+	}
+	public override PlayerState Exit(Player player) 
+	{
+		return null;
+	}
+	public override PlayerState HandleEvent(EventType type)
+    {
+		switch (type) {
+			case EventType.ON_FLOOR:
 				return new PlayerIdleState();
 		}
 		return this;
     }
-    public override PlayerState HandleInput (Player player, InputEventType type) {
+	public override PlayerState HandleInput (Player player, InputEventType type) {
 		switch (type) {
 			case InputEventType.LEFT_JUST_PRESSED:
 			case InputEventType.LEFT_STILL_PRESSED:
@@ -116,20 +209,18 @@ public class PlayerJumpState : PlayerState {
 	}
 }
 
-public class PlayerDieState : PlayerState {
+public class PlayerHitState : PlayerState {
     public override void Enter(Player player)
     {
-		player.Die();
+		player.Hit();
     }
-}
-
-public class PlayerAppearState : PlayerState {
-    public override void Enter(Player player)
+    public override PlayerState Exit(Player player)
     {
-		player.Appear();
-    }
-    public override PlayerState Exit()
-    {
+		if (player.HP <= 0) {
+			return new PlayerDieState();
+		}
+		if (player.VelocityY < 0)
+			return new PlayerFallState();
 		return new PlayerIdleState();
     }
 }

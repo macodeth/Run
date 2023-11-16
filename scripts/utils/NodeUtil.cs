@@ -17,12 +17,21 @@ public partial class NodeUtil : Node {
                 break;
         }
         sceneName = AssetPath.SCENES + sceneName + ".tscn";
-        GetTree().ChangeSceneToFile(sceneName);
+        _LoadScene(sceneName);
         StaticUtil.Log("Loading " + sceneName);
     }
     public void LoadLevel (int level) {
         var sceneName = AssetPath.SCENES + "Level" + level + ".tscn";
-        GetTree().ChangeSceneToFile(sceneName);
+        _LoadScene(sceneName);
         StaticUtil.Log("Loading " + sceneName);
+        var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+        gameSystem.Level = level;
+    }
+    private void _LoadScene (string filePath) {
+        var currentFilePath = GetTree().CurrentScene.SceneFilePath;
+        if (filePath == currentFilePath)
+            GetTree().ReloadCurrentScene();
+        else
+            GetTree().ChangeSceneToFile(filePath);
     }
 }

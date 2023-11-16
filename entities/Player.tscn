@@ -1,9 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://b0tbha1wn8n2l"]
+[gd_scene load_steps=57 format=3 uid="uid://b0tbha1wn8n2l"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.cs" id="1_3eypx"]
 [ext_resource type="Texture2D" uid="uid://pm68cwllniny" path="res://textures/player/Appearing (96x96).png" id="2_48pdx"]
 [ext_resource type="Texture2D" uid="uid://b26l1dn2btdtv" path="res://textures/player/Desappearing (96x96).png" id="3_vcj1i"]
+[ext_resource type="Texture2D" uid="uid://dy3ytbuyib8h7" path="res://textures/player/Fall (32x32).png" id="4_pyikb"]
 [ext_resource type="Texture2D" uid="uid://cbghp3fa6a8h8" path="res://textures/player/Idle (32x32).png" id="4_w0dx1"]
+[ext_resource type="Texture2D" uid="uid://bmc7patcy2k33" path="res://textures/player/Hit (32x32).png" id="5_q0ruk"]
 [ext_resource type="Texture2D" uid="uid://b2fjcody7vkau" path="res://textures/player/Jump (32x32).png" id="5_v7tcb"]
 [ext_resource type="Texture2D" uid="uid://cmw70wbd53mnf" path="res://textures/player/Run (32x32).png" id="6_a7hj7"]
 
@@ -62,6 +64,38 @@ region = Rect2(480, 0, 96, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lkea2"]
 atlas = ExtResource("3_vcj1i")
 region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cekx1"]
+atlas = ExtResource("4_pyikb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2kdq7"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uatwu"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdg66"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yqh5"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygsos"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwesa"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgot5"]
+atlas = ExtResource("5_q0ruk")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a11lu"]
 atlas = ExtResource("4_w0dx1")
@@ -215,6 +249,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_cekx1")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2kdq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uatwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdg66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yqh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygsos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwesa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgot5")
+}],
+"loop": false,
+"name": &"Hit",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_a11lu")
 }, {
 "duration": 1.0,
@@ -309,9 +377,10 @@ position = Vector2(189.458, 313.321)
 script = ExtResource("1_3eypx")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_k8h0q")
-animation = &"Idle"
+animation = &"Hit"
 speed_scale = 2.0
 
 [node name="collision" type="CollisionShape2D" parent="."]
@@ -320,3 +389,33 @@ shape = SubResource("RectangleShape2D_fnito")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.458
+offset_top = -49.321
+offset_right = 53.542
+offset_bottom = -23.321
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.458
+offset_top = -80.321
+offset_right = 53.542
+offset_bottom = -54.321
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bojk25xwa5va6"
-path="res://.godot/imported/Run.png-1bfaea953b4db4f3473831868f18282f.ctex"
+uid="uid://cms1fh868ab7q"
+path="res://.godot/imported/Blink (54x52).png-612f91aa3674ad07bb020ec1c3ddef22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/player/Run.png"
-dest_files=["res://.godot/imported/Run.png-1bfaea953b4db4f3473831868f18282f.ctex"]
+source_file="res://textures/Traps/Spike Head/Blink (54x52).png"
+dest_files=["res://.godot/imported/Blink (54x52).png-612f91aa3674ad07bb020ec1c3ddef22.ctex"]
 
 [params]
 

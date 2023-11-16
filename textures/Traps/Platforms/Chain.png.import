@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk3svbkkgaji2"
-path="res://.godot/imported/Jump.png-8dc53efaa1e11e6b2bd92a2e321f507f.ctex"
+uid="uid://cg7pqpcq85mp0"
+path="res://.godot/imported/Chain.png-eb3f4f75c1f66841e076fc45b5b84190.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/player/Jump.png"
-dest_files=["res://.godot/imported/Jump.png-8dc53efaa1e11e6b2bd92a2e321f507f.ctex"]
+source_file="res://textures/Traps/Platforms/Chain.png"
+dest_files=["res://.godot/imported/Chain.png-eb3f4f75c1f66841e076fc45b5b84190.ctex"]
 
 [params]
 

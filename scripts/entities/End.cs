@@ -17,7 +17,7 @@ public partial class End : Area2D
 		if (body.IsInGroup(GroupName.PLAYER)) {
 			if (!_is_end) {
 				var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
-				gameSystem.EmitSignal(GameSystem.SignalName.GameEnded);
+				gameSystem.EmitSignal(GameSystem.SignalName.GameWon);
 			}
 			_is_end = true;
 		}

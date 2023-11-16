@@ -30,9 +30,26 @@ public partial class PanelResult : BasePopup
 		nodeUtil.LoadScene(SceneId.SELECTION);
 	}
 	private void ClickReplay () {
-
+		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+		var nodeUtil = GetNode<NodeUtil>(AutoLoad.NODE_UTIL);
+		nodeUtil.LoadLevel(gameSystem.Level);
 	}
 	private void ClickNext () {
-
+		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+		var nodeUtil = GetNode<NodeUtil>(AutoLoad.NODE_UTIL);
+		nodeUtil.LoadLevel(gameSystem.Level + 1);
+	}
+	public void SetData (bool isWin, int score, int seconds) {
+		TTime.Text = StaticUtil.TimeFormat(seconds);
+		if (isWin)
+			TResult.Text = "STAGE COMPLETED!";
+		else
+			TResult.Text = "DEATH ...";
+		TScore.Text = score.ToString();
+		if (!isWin)
+			BNext.Hide();
+		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+		if (gameSystem.Level > Selection.MAX_LEVEL)
+			BNext.Hide();
 	}
 }

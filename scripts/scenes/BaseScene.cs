@@ -26,7 +26,11 @@ public partial class BaseScene: Control {
     public CanvasLayer GetCanvasLayer (LayerId layerId) {
         return CanvasList[layerId];
     }
-    public void AddPopup (PopupType type) {
+    public void AddPanelResult (bool isWin, int score, int seconds) {
+        var popup = AddPopup(PopupType.RESULT) as PanelResult;
+        popup.SetData(isWin, score, seconds);
+    }
+    private BasePopup AddPopup (PopupType type) {
         var name = "";
         switch (type) {
             case PopupType.RESULT:
@@ -35,7 +39,8 @@ public partial class BaseScene: Control {
         }
         var uiLayer = GetCanvasLayer(LayerId.UI);
         var scene = ResourceLoader.Load(AssetPath.POPUP + name + ".tscn") as PackedScene;
-        var popup = scene.Instantiate();
+        var popup = scene.Instantiate() as BasePopup;
         uiLayer.AddChild(popup);
+        return popup;
     }
 }

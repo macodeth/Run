@@ -1,4 +1,4 @@
-[gd_scene load_steps=148 format=3 uid="uid://cqddxmb10nh7s"]
+[gd_scene load_steps=155 format=3 uid="uid://cqddxmb10nh7s"]
 
 [ext_resource type="Texture2D" uid="uid://dd4iejf3nkmlj" path="res://textures/Items/Fruits/Apple.png" id="1_5x64r"]
 [ext_resource type="Script" path="res://scripts/entities/Fruit.cs" id="1_tap7n"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://du8uwwcy6ghjv" path="res://textures/Items/Fruits/Cherries.png" id="3_wyk0w"]
 [ext_resource type="Texture2D" uid="uid://73mfl67me34t" path="res://textures/Items/Fruits/Kiwi.png" id="4_gge81"]
 [ext_resource type="Texture2D" uid="uid://cjdawl40xf1k8" path="res://textures/Items/Fruits/Melon.png" id="5_rvijw"]
+[ext_resource type="Texture2D" uid="uid://bgvvw007bu1ft" path="res://textures/Items/Fruits/Collected.png" id="5_s4o37"]
 [ext_resource type="Texture2D" uid="uid://dvf320qkdmqnd" path="res://textures/Items/Fruits/Orange.png" id="6_8idn2"]
 [ext_resource type="Texture2D" uid="uid://bpylywtwjnhxj" path="res://textures/Items/Fruits/Pineapple.png" id="7_k2ins"]
 [ext_resource type="Texture2D" uid="uid://dlsqm15vdlxae" path="res://textures/Items/Fruits/Strawberry.png" id="8_odq4c"]
@@ -213,6 +214,30 @@ region = Rect2(480, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ni44"]
 atlas = ExtResource("3_wyk0w")
 region = Rect2(512, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5q88"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf0cw"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw1ea"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcdaf"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7k37"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kncgu"]
+atlas = ExtResource("5_s4o37")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fmfhp"]
 atlas = ExtResource("4_gge81")
@@ -726,6 +751,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_y5q88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf0cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw1ea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcdaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7k37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kncgu")
+}],
+"loop": false,
+"name": &"Collected",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fmfhp")
 }, {
 "duration": 1.0,
@@ -1008,7 +1056,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yf253"]
 size = Vector2(14.5, 14)
 
-[node name="Fruit" type="StaticBody2D"]
+[node name="Fruit" type="Area2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_tap7n")
 

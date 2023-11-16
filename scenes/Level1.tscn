@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckwrapth4je6q"]
+[gd_scene load_steps=12 format=3 uid="uid://ckwrapth4je6q"]
 
 [ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_dgl37"]
 [ext_resource type="PackedScene" uid="uid://b0tbha1wn8n2l" path="res://entities/Player.tscn" id="4_qjjpa"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cqtjkem1jq8f" path="res://entities/Start.tscn" id="6_1tu08"]
 [ext_resource type="PackedScene" uid="uid://e6nkoy41nvyq" path="res://entities/Box.tscn" id="6_tjdav"]
 [ext_resource type="PackedScene" uid="uid://qed3meyc8pes" path="res://entities/End.tscn" id="7_dacda"]
+[ext_resource type="PackedScene" uid="uid://cqddxmb10nh7s" path="res://entities/Fruit.tscn" id="7_xpcq3"]
+[ext_resource type="PackedScene" uid="uid://c5j4owlt8pjjo" path="res://entities/FireTrap.tscn" id="8_t81tf"]
+[ext_resource type="PackedScene" uid="uid://bra7t3mtaiug5" path="res://entities/Trampoline.tscn" id="9_pckgy"]
+[ext_resource type="PackedScene" uid="uid://vy0bng17p4r1" path="res://entities/Spike.tscn" id="10_slhro"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0ym8"]
 size = Vector2(1151, 20)
@@ -19,19 +23,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dgl37")
 
-[node name="Player" parent="." instance=ExtResource("4_qjjpa")]
-position = Vector2(75, 371)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Platform" type="StaticBody2D" parent="."]
 position = Vector2(574, 433)
 
-[node name="Idle" type="Sprite2D" parent="StaticBody2D"]
+[node name="Idle" type="Sprite2D" parent="Platform"]
 texture_repeat = 2
 texture = ExtResource("5_8imrs")
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 24)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
 position = Vector2(2.5, 0)
 shape = SubResource("RectangleShape2D_n0ym8")
 
@@ -43,3 +44,27 @@ position = Vector2(1007, 392)
 
 [node name="Box" parent="." instance=ExtResource("6_tjdav")]
 position = Vector2(434, 413)
+
+[node name="Fruit" parent="." instance=ExtResource("7_xpcq3")]
+position = Vector2(365, 342)
+
+[node name="Fruit2" parent="." instance=ExtResource("7_xpcq3")]
+position = Vector2(422, 340)
+Type = 2
+
+[node name="Fruit3" parent="." instance=ExtResource("7_xpcq3")]
+position = Vector2(476, 346)
+Type = 5
+
+[node name="FireTrap" parent="." instance=ExtResource("8_t81tf")]
+position = Vector2(768, 439)
+
+[node name="Trampoline" parent="." instance=ExtResource("9_pckgy")]
+position = Vector2(513, 394)
+
+[node name="Spike" parent="." instance=ExtResource("10_slhro")]
+position = Vector2(621, 415)
+Size = 10
+
+[node name="Player" parent="." instance=ExtResource("4_qjjpa")]
+position = Vector2(75, 371)

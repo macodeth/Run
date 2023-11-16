@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cpchih6j16l2y" path="res://fonts/BlackFont.png" id="5_2wbss"]
 [ext_resource type="Texture2D" uid="uid://b0pjon1un10mi" path="res://textures/UI/Restart.png" id="5_4oufy"]
 [ext_resource type="Texture2D" uid="uid://bpphmtbjpgshi" path="res://textures/UI/Next.png" id="6_rlcr3"]
-[ext_resource type="PackedScene" uid="uid://c5xtxwj2k6qx1" path="res://entities/ScoreContainer.tscn" id="8_v0mmy"]
+[ext_resource type="Texture2D" uid="uid://bll0omivaw68o" path="res://textures/Items/Fruits/Icon.png" id="8_afhyr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1a3mp"]
 texture = ExtResource("4_52bvn")
@@ -49,7 +49,7 @@ BReplay = NodePath("Bkg/ButtonContainer/GridContainer/BReplay")
 BNext = NodePath("Bkg/ButtonContainer/GridContainer/BNext")
 TResult = NodePath("Bkg/TResult")
 TTime = NodePath("Bkg/TTime")
-TScore = NodePath("")
+TScore = NodePath("Bkg/ScoreContainer/TScore")
 
 [node name="Bkg" type="NinePatchRect" parent="."]
 texture_filter = 1
@@ -148,9 +148,35 @@ grow_horizontal = 2
 scale = Vector2(2.2, 2.2)
 pivot_offset = Vector2(60, 6.5)
 theme_override_fonts/font = ExtResource("5_2wbss")
+text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreContainer" parent="Bkg" instance=ExtResource("8_v0mmy")]
-layout_mode = 0
-anchors_preset = 0
+[node name="ScoreContainer" type="HBoxContainer" parent="Bkg"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 2.0
+offset_right = 28.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(28, 8)
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Bkg/ScoreContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("8_afhyr")
+
+[node name="TScore" type="Label" parent="Bkg/ScoreContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_2wbss")
+horizontal_alignment = 1
+vertical_alignment = 1

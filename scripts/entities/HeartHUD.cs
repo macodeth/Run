@@ -1,18 +1,27 @@
+using Enum;
 using Godot;
 using System;
 
 public partial class HeartHUD : Control
 {
+	[Export]
+	public Label TScore;
+	[Export]
+	public BoxContainer HeartContainer;
 	public void Initialize () {
-		
+		// initialize hearts
+		var heart = GameSystem.HP;
+		SetHeart(heart);
 	}
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+	public void SetScore (int score) {
+		TScore.Text = score.ToString();
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+	public void SetHeart (int heart) {
+		StaticUtil.RemoveAllChildren(HeartContainer);
+		var scene = ResourceLoader.Load(AssetPath.ENTITIES + "Heart.tscn") as PackedScene;
+		for (var i = 0; i < heart; i++) {
+			var heartNode = scene.Instantiate();
+			HeartContainer.AddChild(heartNode);
+		}
 	}
 }

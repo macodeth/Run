@@ -4,7 +4,7 @@ using System;
 
 public partial class Selection : BaseScene
 {
-	private const int MAX_LEVEL = 10;
+	public readonly static int MAX_LEVEL = 10;
 	public override void _Ready()
 	{
 		base._Ready();
