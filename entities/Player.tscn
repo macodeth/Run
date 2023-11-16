@@ -419,3 +419,7 @@ offset_bottom = -54.321
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
+
+[node name="Visibility" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0.542005, 7.67898)
+scale = Vector2(1.9, 2.4)

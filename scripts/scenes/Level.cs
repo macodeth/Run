@@ -49,7 +49,7 @@ public partial class Level : BaseScene
         _heartHUD.SetScore(_score);
     }
     private Timer _timer;
-    private int _elapsed_seconds;
+    private int _elapsed_seconds = 0;
     private bool _is_start = false;
     private void GameStartedHandler () {
         _start_time = DateTime.Now;
@@ -75,11 +75,13 @@ public partial class Level : BaseScene
         _timeHUD.SetTime(_elapsed_seconds);
     }
     private void GameWonHandler () {
-        _timer.Stop();
+        if (_is_start)
+            _timer.Stop();
         AddPanelResult(true, _score, _elapsed_seconds);
     }
     private void GameLostHandler () {
-        _timer.Stop();
+        if (_is_start)
+            _timer.Stop();
         AddPanelResult(false, _score, _elapsed_seconds);
     }
     private void HeartLostHandler (int currentHP){

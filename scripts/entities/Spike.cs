@@ -1,19 +1,29 @@
 using Godot;
-using System;
 
-public partial class Spike : Node
+[Tool]
+public partial class Spike : StaticBody2D
 {
+	private int _spike_size = 1;
+	private const int SMALL_SIZE = 8;	
 	[Export]
-	public int Size = 1;
-	private Sprite2D _sprite;
-	private CollisionShape2D _shape;
+	public int SpikeSize {
+		get => _spike_size;
+		set {
+			_spike_size = value;
+			UpdateSize();
+		}
+	}
+	[Export]
+	private Sprite2D Sprite;
+	[Export]
+	private CollisionShape2D Shape;
 	public override void _Ready()
 	{
-		_sprite = GetNode<Sprite2D>("Sprite");
-		_shape = GetNode<CollisionShape2D>("Shape");
-		var rectangle = _shape.Shape as RectangleShape2D;
-		var width = _sprite.RegionRect.Size.X;
-		rectangle.Set("size", new Vector2(width * 2 * Size, rectangle.Size.Y));
-		_sprite.RegionRect = new Rect2(_sprite.RegionRect.Position, new Vector2(width * Size, _sprite.RegionRect.Size.Y));
+		UpdateSize();
+	}
+	private void UpdateSize () {
+		var rectangle = Shape.Shape as RectangleShape2D;
+		rectangle.Set("size", new Vector2(SMALL_SIZE * 2 * SpikeSize, rectangle.Size.Y));
+		Sprite.RegionRect = new Rect2(Sprite.RegionRect.Position, new Vector2(SMALL_SIZE * SpikeSize, Sprite.RegionRect.Size.Y));
 	}
 }

@@ -9,6 +9,9 @@ public partial class MoveablePlatform : StaticBody2D {
     private float _prev_x = 0;
     [Export]
 	public double PROPEL_VELOCITY = -700;
+	public void DisableCollision () {
+		_collision.SetDeferred("disabled", true);
+	}
     public override void _Ready()
     {
    		_top = GetNode<Area2D>("Top");

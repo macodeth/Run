@@ -38,7 +38,6 @@ public partial class Player : CharacterBody2D
 				_anim.Scale = new Vector2(scale, scale);
 		}
 	}
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Initialize();
@@ -77,6 +76,7 @@ public partial class Player : CharacterBody2D
 		if (_gravity > GRAVITY)
 			_gravity = GRAVITY;
 		_velocity_y += _gravity * delta;
+		_label2.Text = _velocity_y.ToString();
 		Velocity = new Vector2((float)velocity, (float)_velocity_y);
 		MoveAndSlide();
 		

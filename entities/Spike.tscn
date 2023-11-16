@@ -6,8 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ngakk"]
 size = Vector2(16, 12)
 
-[node name="Spike" type="StaticBody2D"]
+[node name="Spike" type="StaticBody2D" node_paths=PackedStringArray("Sprite", "Shape")]
 script = ExtResource("2_lsrql")
+Sprite = NodePath("Sprite")
+Shape = NodePath("Shape")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
