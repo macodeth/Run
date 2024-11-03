@@ -31,7 +31,7 @@ public class PlayerIdleState : PlayerState {
 				return new PlayerRunState(MoveDirection.RIGHT);
 			case InputEventType.UP:
 				if (player.IsOnFloor())
-					return new PlayerJumpState();
+					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				return null;
 			case InputEventType.RESET_PRESSED:
 				return new PlayerDieState();
@@ -78,7 +78,7 @@ public class PlayerRunState : PlayerState {
 				}
 			case InputEventType.UP:
 				if (player.IsOnFloor())
-					return new PlayerJumpState();
+					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				return null;
 		}
 		return null;
@@ -96,9 +96,14 @@ public class PlayerRunState : PlayerState {
 public class PlayerJumpState : PlayerState {
     public override void Enter(Player player)
     {
-		player.Jump();
+		player.Jump(_initVel, _indirectForce);
     }
-
+	private double _initVel = 0;
+	private bool _indirectForce = false;
+	public PlayerJumpState (double initVel, bool indirectForce = false) {
+		_initVel = initVel;
+		_indirectForce = indirectForce;
+	}
     public override PlayerState HandleInput (Player player, InputEventType type) {
 		switch (type) {
 			case InputEventType.LEFT_JUST_PRESSED:
@@ -120,6 +125,10 @@ public class PlayerJumpState : PlayerState {
 				if (player.Direction == MoveDirection.RIGHT) {
 					player.SetMoveVelocity(false);
 				}
+				return null;
+			case InputEventType.UP:
+				if (player.IsJumpable())
+					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				return null;
 		}
 		return null;
@@ -203,6 +212,10 @@ public class PlayerFallState : PlayerState {
 				if (player.Direction == MoveDirection.RIGHT) {
 					player.SetMoveVelocity(false);
 				}
+				return null;
+			case InputEventType.UP:
+				if (player.IsJumpable())
+					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				return null;
 		}
 		return null;

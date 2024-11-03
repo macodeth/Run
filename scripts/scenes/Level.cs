@@ -49,14 +49,14 @@ public partial class Level : BaseScene
         _heartHUD.SetScore(_score);
     }
     private Timer _timer;
-    private int _elapsed_seconds = 0;
+    private int _elapsed_miliseconds = 0;
     private bool _is_start = false;
     private void GameStartedHandler () {
         _start_time = DateTime.Now;
         _is_start = true;
         _timer = new Timer
         {
-            WaitTime = 0.5,
+            WaitTime = 0.04,
             OneShot = false
         };
         _timer.Timeout += TimerLoop;
@@ -68,21 +68,21 @@ public partial class Level : BaseScene
             return 0;
         var currentTime = DateTime.Now;
         var timeSpan = currentTime - _start_time;
-        return (int)timeSpan.TotalSeconds;
+        return (int)timeSpan.TotalMilliseconds;
     }
     private void TimerLoop () {
-        _elapsed_seconds = ElapsedSeconds();
-        _timeHUD.SetTime(_elapsed_seconds);
+        _elapsed_miliseconds = ElapsedSeconds();
+        _timeHUD.SetTime(_elapsed_miliseconds);
     }
     private void GameWonHandler () {
         if (_is_start)
             _timer.Stop();
-        AddPanelResult(true, _score, _elapsed_seconds);
+        AddPanelResult(true, _score, _elapsed_miliseconds);
     }
     private void GameLostHandler () {
         if (_is_start)
             _timer.Stop();
-        AddPanelResult(false, _score, _elapsed_seconds);
+        AddPanelResult(false, _score, _elapsed_miliseconds);
     }
     private void HeartLostHandler (int currentHP){
         _heartHUD.SetHeart(currentHP);

@@ -12,6 +12,9 @@ public partial class MoveablePlatform : StaticBody2D {
 	public void DisableCollision () {
 		_collision.SetDeferred("disabled", true);
 	}
+	public void EnableCollision () {
+		_collision.SetDeferred("disabled", false);
+	}
     public override void _Ready()
     {
    		_top = GetNode<Area2D>("Top");
@@ -39,7 +42,7 @@ public partial class MoveablePlatform : StaticBody2D {
 		foreach (var body in _bodyList) {
 			if (body.IsInGroup(GroupName.PLAYER)) {
 				var player = body as Player;
-				player.Jump(PROPEL_VELOCITY);
+				player.ChangeState(new PlayerJumpState(PROPEL_VELOCITY, true));
 			}
 		}
 	}	

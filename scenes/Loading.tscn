@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bir1aafahwe5e"]
 
-[ext_resource type="Script" path="res://scripts/scenes/Loading.cs" id="1_x5xqj"]
+[ext_resource type="Script" path="res://scripts/scenes/Loading.cs" id="1_0o2xg"]
 
 [node name="Loading" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_x5xqj")
+script = ExtResource("1_0o2xg")

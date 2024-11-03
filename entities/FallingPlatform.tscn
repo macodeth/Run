@@ -3,26 +3,9 @@
 [ext_resource type="Script" path="res://scripts/entities/FallingPlatform.cs" id="1_hcsib"]
 [ext_resource type="Texture2D" uid="uid://cpkj3c5hgcxig" path="res://textures/Traps/Falling Platforms/On (32x10).png" id="2_3ocvv"]
 
-[sub_resource type="Animation" id="Animation_u7hqc"]
-resource_name = "Fall"
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3, 0]
-}
-
 [sub_resource type="Animation" id="Animation_q7ncv"]
-resource_name = "Idle"
+resource_name = "Fall"
 length = 0.5
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -74,6 +57,24 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_u7hqc"]
+resource_name = "Idle"
+length = 0.4
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="Animation" id="Animation_m0p85"]
 length = 0.001
 tracks/0/type = "value"
@@ -115,8 +116,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0e6w6"]
 _data = {
-"Fall": SubResource("Animation_u7hqc"),
-"Idle": SubResource("Animation_q7ncv"),
+"Fall": SubResource("Animation_q7ncv"),
+"Idle": SubResource("Animation_u7hqc"),
 "RESET": SubResource("Animation_m0p85")
 }
 

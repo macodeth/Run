@@ -5,7 +5,7 @@ public partial class TimeHUD : Control
 {
 	[Export]
 	public Label _label;
-	public void SetTime (int seconds) {
-		_label.Text = StaticUtil.TimeFormat(seconds);
+	public void SetTime (int miliseconds) {
+		_label.Text = StaticUtil.TimeFormat(miliseconds);
 	}
 }

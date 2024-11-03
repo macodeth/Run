@@ -22,6 +22,7 @@ public partial class Spike : StaticBody2D
 		UpdateSize();
 	}
 	private void UpdateSize () {
+		if (Shape == null) return;
 		var rectangle = Shape.Shape as RectangleShape2D;
 		rectangle.Set("size", new Vector2(SMALL_SIZE * 2 * SpikeSize, rectangle.Size.Y));
 		Sprite.RegionRect = new Rect2(Sprite.RegionRect.Position, new Vector2(SMALL_SIZE * SpikeSize, Sprite.RegionRect.Size.Y));

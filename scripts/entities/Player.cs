@@ -9,6 +9,7 @@ public partial class Player : CharacterBody2D
 		get => _hp;
 	}
 	private AnimatedSprite2D _anim;
+	private Node2D _dust;
 	private Label _label;
 	public Label _label2;
 	private PlayerState _state;
@@ -20,13 +21,21 @@ public partial class Player : CharacterBody2D
 		get => _velocity_y;
 	}
 	private double _gravity = 0;
+	private const int MAX_JUMP = 2;
+	private const double MAX_DIAGONAL_JUMP_VELOCITY = 500f;
 	private const double MOVE_VELOCITY = 300f;
-	private const double JUMP_VELOCITY = - 350f;
+	public const double JUMP_VELOCITY = - 400f;
 	private const double GRAVITY = 1200f;
 	private const double JERK = 2000f;
 	private const double INVULNERABILITY_PERIOD = 0.5;
 	// move slower while in the air
-	private readonly double MOVE_VELOCITY_AIR_RATIO = 0.7;
+	private double MOVE_VELOCITY_AIR_RATIO = 0.7;
+	private const int TERRAIN_SET_BOUNCE = 2;
+	private const double TERRAIN_BOUNCE_VELOCITY = -800;
+	private int _jump_times = 0;
+	public bool IsJumpable () {
+		return _jump_times < MAX_JUMP;
+	}
 	public MoveDirection Direction {
 		get => _direction;
 		set {
@@ -38,6 +47,10 @@ public partial class Player : CharacterBody2D
 				_anim.Scale = new Vector2(scale, scale);
 		}
 	}
+	// only increase one additional jump after touching wall
+	private bool _is_on_wall_first = false;
+	// prevent players from being able to jump additional time after touching wall
+	private bool _is_jump_from_ground = true;
 	public override void _Ready()
 	{
 		Initialize();
@@ -51,6 +64,7 @@ public partial class Player : CharacterBody2D
     private void Initialize () {
 		AddToGroup(GroupName.PLAYER);
 		_anim = GetNode<AnimatedSprite2D>("sprite");
+		_dust = GetNode<Node2D>("Dust");
 		_label = GetNode<Label>("Label");
 		_label2 = GetNode<Label>("Label2");
 		ChangeState(new PlayerAppearState());
@@ -65,29 +79,49 @@ public partial class Player : CharacterBody2D
 	}
     public override void _PhysicsProcess(double delta)
     {
-		double velocity = _velocity_x;
+		if (_state is PlayerDieState) return;
+		double velocity_x = _velocity_x;
+
+		if (velocity_x > MOVE_VELOCITY)
+			velocity_x = MOVE_VELOCITY;
+
 		if (_direction == MoveDirection.LEFT)
-			velocity = -velocity;
+			velocity_x = -velocity_x;
+		// move slower while in the air
 		if (_state is PlayerJumpState) 
-			velocity *= MOVE_VELOCITY_AIR_RATIO;
+			velocity_x *= MOVE_VELOCITY_AIR_RATIO;
+
 		// update gravity
 		_gravity += JERK * delta;
 		// maximum gravity reached
 		if (_gravity > GRAVITY)
 			_gravity = GRAVITY;
 		_velocity_y += _gravity * delta;
-		_label2.Text = _velocity_y.ToString();
-		Velocity = new Vector2((float)velocity, (float)_velocity_y);
+		Velocity = new Vector2((float)velocity_x, (float)_velocity_y);
 		MoveAndSlide();
-		
 		if (IsOnFloor()) {
+			_jump_times = 0;
 			_velocity_y = 0;
+			_is_jump_from_ground = true;
 			HandleEvent(EventType.ON_FLOOR);
 		}
 		if (_velocity_y > 0 && !IsOnFloor()) {
 			// fall
 			HandleEvent(EventType.FALLING);
 		}
+		if (IsOnWall() && _state is PlayerJumpState) {
+			if (!_is_on_wall_first) {
+				if (!_is_jump_from_ground)
+					_jump_times -= 1;
+				_is_jump_from_ground = false;
+				_is_on_wall_first = true;
+				_jump_times = Math.Max(0, _jump_times);
+			}
+		}
+		if (!IsOnWall()) {
+			_is_on_wall_first = false;
+		}
+		_label2.Text = GetSlideCollisionCount().ToString();
 		for (int i = 0; i < GetSlideCollisionCount(); i++) {
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider() as Node;
@@ -100,10 +134,25 @@ public partial class Player : CharacterBody2D
 			if (collider is Spike) {
 				InstantDeath();
 			}
+			// players hit something above 
+			// --> immediately stop
+			if (collision.GetNormal().Y > 0) {
+				_velocity_y = 0;
+			}
+			if (collider is TileMap) {
+				var tilemap = collider as TileMap;
+				var cell = tilemap.LocalToMap(collision.GetPosition() - collision.GetNormal() - new Vector2(1, 0));
+				var tile = tilemap.GetCellTileData(0, cell);
+				if (tile != null) {
+					var set = tile.TerrainSet;
+					if (set == TERRAIN_SET_BOUNCE && collision.GetNormal().Y < 0) {
+						ChangeState(new PlayerJumpState(-900, true));
+					}
+				}
+			}
 		}
     }
-
-    private void ChangeState (PlayerState state) {
+    public void ChangeState (PlayerState state) {
 		if (state != null) {
 			_label.Text = state.GetType().ToString();
 			StaticUtil.Log(state.ToString());
@@ -131,9 +180,26 @@ public partial class Player : CharacterBody2D
 		SetMoveVelocity(true);
 		_anim.Play("Run");
 	}
-	public void Jump (double initVel = JUMP_VELOCITY) {
+	public void Jump (double initVel = JUMP_VELOCITY, bool indirectForce = false) {
 		SetJumpVelocity(true, initVel);
 		_anim.Play("Jump");
+		
+		// platform propels player
+		if (indirectForce) return;
+
+		// player presses jump button
+
+		_jump_times += 1;
+		var scene = ResourceLoader.Load(AssetPath.ENTITIES + "VFX.tscn") as PackedScene;
+		var vfx = scene.Instantiate() as AnimatedSprite2D;
+		var globalPoint = ToGlobal(_dust.Position);
+		vfx.Position = globalPoint;
+		GetParent().AddChild(vfx);
+		vfx.Play("Jump");
+		vfx.AnimationFinished += () => {
+			if (vfx.Animation == "Jump")
+			vfx.QueueFree();
+		};
 	}
 	public void Die () {
 		SetMoveVelocity(false);
@@ -161,6 +227,7 @@ public partial class Player : CharacterBody2D
 			}
 		}
 		_took_damage = true;
+		_velocity_y = 0;
 		_last_time_damaged = current_time;
 		_hp -= damage;
 		ChangeState(new PlayerHitState());

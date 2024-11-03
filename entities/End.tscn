@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://qed3meyc8pes"]
 
-[ext_resource type="Script" path="res://scripts/entities/End.cs" id="1_2go1v"]
+[ext_resource type="Script" path="res://scripts/entities/End.cs" id="1_jvpve"]
 [ext_resource type="Texture2D" uid="uid://b8yjwc3fxyqsw" path="res://textures/Items/Checkpoints/Checkpoint/Checkpoint (Flag Idle)(64x64).png" id="2_tix1g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1evq"]
@@ -78,19 +78,21 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 10.0
+"speed": 20.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkppt"]
-size = Vector2(30, 46)
+size = Vector2(30, 50)
 
 [node name="End" type="Area2D"]
-script = ExtResource("1_2go1v")
+script = ExtResource("1_jvpve")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gomqh")
 animation = &"Idle"
+frame = 3
+frame_progress = 0.670356
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 9)
+position = Vector2(2, 7)
 shape = SubResource("RectangleShape2D_dkppt")

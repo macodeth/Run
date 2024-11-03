@@ -579,7 +579,7 @@ region = Rect2(480, 0, 32, 32)
 atlas = ExtResource("8_odq4c")
 region = Rect2(512, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_3c5ol"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_1qv52"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -1053,7 +1053,7 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf253"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hafm0"]
 size = Vector2(14.5, 14)
 
 [node name="Fruit" type="Area2D"]
@@ -1061,9 +1061,9 @@ scale = Vector2(2, 2)
 script = ExtResource("1_tap7n")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_3c5ol")
+sprite_frames = SubResource("SpriteFrames_1qv52")
 animation = &"Apple"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.25, -1)
-shape = SubResource("RectangleShape2D_yf253")
+shape = SubResource("RectangleShape2D_hafm0")

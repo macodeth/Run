@@ -13,10 +13,19 @@ enum FruitType {
 	STRAWBERRY
 }
 
+[Tool]
 public partial class Fruit : Area2D
 {
+	private FruitType _type;
 	[Export(PropertyHint.Enum, "APPLE:0, BANANA:1, CHERRIES:2, KIWI:3, MELON:4, ORANGE:5, PINEAPPLE:6, STRAWBERRY:7")]
-	private FruitType Type;
+	private FruitType Type {
+		get => _type;
+		set {
+			_type = value;
+			_sprite = GetNode<AnimatedSprite2D>("Sprite");
+			_sprite.Play(Animation());
+		}
+	}
 	[Export]
 	public int Score = 5;
 	private AnimatedSprite2D _sprite;

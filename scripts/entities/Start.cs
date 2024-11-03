@@ -20,13 +20,13 @@ public partial class Start : Area2D
 				gameSystem.EmitSignal(GameSystem.SignalName.GameStarted);
 			}
 			_is_start = true;
-			Moving();
+			Stop();
 		}
 	}
 	private void Idle () {
 		_anim.Play("Idle");
 	}
-	private void Moving () {
-		_anim.Play("Moving");
+	private void Stop () {
+		_anim.Play("Stop");
 	}
 }
