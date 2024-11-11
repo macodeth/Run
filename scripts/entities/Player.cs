@@ -22,8 +22,10 @@ public partial class Player : CharacterBody2D
 	}
 	private double _gravity = 0;
 	private const int MAX_JUMP = 2;
-	private const double MAX_DIAGONAL_JUMP_VELOCITY = 500f;
 	private const double MOVE_VELOCITY = 300f;
+	private const double DASH_VELOCITY = 800f;
+	private const double MAX_DASH_TIME = 0.25f;
+	private double dash_time = 0;
 	public const double JUMP_VELOCITY = - 400f;
 	private const double GRAVITY = 1200f;
 	private const double JERK = 2000f;
@@ -31,8 +33,11 @@ public partial class Player : CharacterBody2D
 	// move slower while in the air
 	private double MOVE_VELOCITY_AIR_RATIO = 0.7;
 	private const int TERRAIN_SET_BOUNCE = 2;
-	private const double TERRAIN_BOUNCE_VELOCITY = -800;
 	private int _jump_times = 0;
+	private bool _dashable = true;
+	public bool IsDashable () {
+		return _dashable;
+	}
 	public bool IsJumpable () {
 		return _jump_times < MAX_JUMP;
 	}
@@ -82,13 +87,10 @@ public partial class Player : CharacterBody2D
 		if (_state is PlayerDieState) return;
 		double velocity_x = _velocity_x;
 
-		if (velocity_x > MOVE_VELOCITY)
-			velocity_x = MOVE_VELOCITY;
-
 		if (_direction == MoveDirection.LEFT)
 			velocity_x = -velocity_x;
 		// move slower while in the air
-		if (_state is PlayerJumpState) 
+		if (_state is PlayerJumpState && _state is not PlayerDashState) 
 			velocity_x *= MOVE_VELOCITY_AIR_RATIO;
 
 		// update gravity
@@ -97,18 +99,34 @@ public partial class Player : CharacterBody2D
 		if (_gravity > GRAVITY)
 			_gravity = GRAVITY;
 		_velocity_y += _gravity * delta;
-		Velocity = new Vector2((float)velocity_x, (float)_velocity_y);
+		Velocity = new Vector2((float)velocity_x, 
+			(_state is PlayerDashState) ? 0 : (float)_velocity_y);
 		MoveAndSlide();
+		// dash
+		if (_state is PlayerDashState) {
+			dash_time += delta;
+			if (dash_time > MAX_DASH_TIME) {
+				velocity_x = 0;
+				dash_time = 0;
+				if (IsOnFloor()) {
+					ChangeState(new PlayerIdleState());
+				}
+				else
+					ChangeState(new PlayerFallState());
+			}
+		}
 		if (IsOnFloor()) {
 			_jump_times = 0;
 			_velocity_y = 0;
 			_is_jump_from_ground = true;
+			_dashable = true;
 			HandleEvent(EventType.ON_FLOOR);
 		}
 		if (_velocity_y > 0 && !IsOnFloor()) {
 			// fall
 			HandleEvent(EventType.FALLING);
 		}
+		// wall jump
 		if (IsOnWall() && _state is PlayerJumpState) {
 			if (!_is_on_wall_first) {
 				if (!_is_jump_from_ground)
@@ -172,6 +190,10 @@ public partial class Player : CharacterBody2D
 	public void SetMoveVelocity (bool isSet) {
 		_velocity_x = isSet ? MOVE_VELOCITY : 0;
 	}
+	public void SetDashVelocity (bool isSet) {
+		_velocity_x = isSet ? DASH_VELOCITY : 0;
+		_velocity_y = 0;
+	}
     public void Idle () {
 		SetMoveVelocity(false);
 		_anim.Play("Idle");
@@ -200,6 +222,11 @@ public partial class Player : CharacterBody2D
 			if (vfx.Animation == "Jump")
 			vfx.QueueFree();
 		};
+	}
+	public void Dash () {
+		SetDashVelocity(true);
+		_anim.Play("Dash");
+		_dashable = false;
 	}
 	public void Die () {
 		SetMoveVelocity(false);

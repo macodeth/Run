@@ -35,6 +35,10 @@ public class PlayerIdleState : PlayerState {
 				return null;
 			case InputEventType.RESET_PRESSED:
 				return new PlayerDieState();
+			case InputEventType.DASH_PRESSED:
+				if (player.IsDashable())
+					return new PlayerDashState();
+				return null;
 		}
 		return null;
 	}
@@ -79,6 +83,10 @@ public class PlayerRunState : PlayerState {
 			case InputEventType.UP:
 				if (player.IsOnFloor())
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
+				return null;
+			case InputEventType.DASH_PRESSED:
+				if (player.IsDashable())
+					return new PlayerDashState();
 				return null;
 		}
 		return null;
@@ -129,6 +137,10 @@ public class PlayerJumpState : PlayerState {
 			case InputEventType.UP:
 				if (player.IsJumpable())
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
+				return null;
+			case InputEventType.DASH_PRESSED:
+				if (player.IsDashable())
+					return new PlayerDashState();
 				return null;
 		}
 		return null;
@@ -217,6 +229,10 @@ public class PlayerFallState : PlayerState {
 				if (player.IsJumpable())
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				return null;
+			case InputEventType.DASH_PRESSED:
+				if (player.IsDashable())
+					return new PlayerDashState();
+				return null;
 		}
 		return null;
 	}
@@ -235,5 +251,16 @@ public class PlayerHitState : PlayerState {
 		if (player.VelocityY < 0)
 			return new PlayerFallState();
 		return new PlayerIdleState();
+    }
+}
+
+public class PlayerDashState : PlayerState {
+    public override void Enter(Player player)
+    {
+		player.Dash();
+    }
+    public override PlayerState HandleInput(Player player, InputEventType type)
+    {
+		return null;
     }
 }

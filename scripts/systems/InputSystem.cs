@@ -9,7 +9,8 @@ public enum InputEventType {
 	LEFT_RELEASED,
 	RIGHT_RELEASED,
 	UP,
-	RESET_PRESSED
+	RESET_PRESSED,
+	DASH_PRESSED
 }
 
 
@@ -50,6 +51,10 @@ public partial class InputSystem : Node
 		if (@event.IsActionPressed("Reset")) {
 			StaticUtil.Log("press reset");
 			EmitSignal(SignalName.ButtonPressed, (int)InputEventType.RESET_PRESSED);
+		}
+		if (@event.IsActionPressed("Dash")) {
+			StaticUtil.Log("press dash");
+			EmitSignal(SignalName.ButtonPressed, (int)InputEventType.DASH_PRESSED);
 		}
     }
 }

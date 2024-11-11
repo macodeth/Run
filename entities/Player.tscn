@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://b0tbha1wn8n2l"]
+[gd_scene load_steps=60 format=3 uid="uid://b0tbha1wn8n2l"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.cs" id="1_n2y6p"]
 [ext_resource type="Texture2D" uid="uid://pm68cwllniny" path="res://textures/player/Appearing (96x96).png" id="2_48pdx"]
@@ -40,6 +40,10 @@ region = Rect2(576, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fa3i2"]
 atlas = ExtResource("3_5fsku")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykxxw"]
+atlas = ExtResource("4_w0dx1")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bycyo"]
@@ -236,6 +240,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ykxxw")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_bycyo")
 }, {
 "duration": 1.0,
@@ -393,7 +405,7 @@ script = ExtResource("1_n2y6p")
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_k8h0q")
-animation = &"Idle"
+animation = &"Dash"
 speed_scale = 2.0
 
 [node name="collision" type="CollisionShape2D" parent="."]
