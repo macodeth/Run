@@ -35,6 +35,8 @@ public partial class Player : CharacterBody2D
 	private const int TERRAIN_SET_BOUNCE = 2;
 	private int _jump_times = 0;
 	private bool _dashable = true;
+	private const double JUMP_BUFFER_TIME = 0.1;
+	private DateTime _jump_buffer = new();
 	public bool IsDashable () {
 		return _dashable;
 	}
@@ -106,10 +108,12 @@ public partial class Player : CharacterBody2D
 		if (_state is PlayerDashState) {
 			dash_time += delta;
 			if (dash_time > MAX_DASH_TIME) {
-				velocity_x = 0;
 				dash_time = 0;
 				if (IsOnFloor()) {
-					ChangeState(new PlayerIdleState());
+					if (IsJumpBufferValid())
+						ChangeState(new PlayerJumpState(JUMP_VELOCITY));
+					else
+						ChangeState(new PlayerIdleState());
 				}
 				else
 					ChangeState(new PlayerFallState());
@@ -120,7 +124,10 @@ public partial class Player : CharacterBody2D
 			_velocity_y = 0;
 			_is_jump_from_ground = true;
 			_dashable = true;
-			HandleEvent(EventType.ON_FLOOR);
+			if (IsJumpBufferValid())
+				ChangeState(new PlayerJumpState(JUMP_VELOCITY));
+			else
+				ChangeState(new PlayerIdleState());
 		}
 		if (_velocity_y > 0 && !IsOnFloor()) {
 			// fall
@@ -173,7 +180,6 @@ public partial class Player : CharacterBody2D
     public void ChangeState (PlayerState state) {
 		if (state != null) {
 			_label.Text = state.GetType().ToString();
-			StaticUtil.Log(state.ToString());
 			_prev_state = _state;
 			_state = state;
 			_state.Enter(this);
@@ -276,5 +282,13 @@ public partial class Player : CharacterBody2D
 		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
 		gameSystem.EmitSignal(GameSystem.SignalName.GameLost);
 		QueueFree();
+	}
+	public void SetJumpBuffer () {
+		_jump_buffer = DateTime.Now;
+	}
+	private bool IsJumpBufferValid () {
+		var elapsedTime = DateTime.Now - _jump_buffer;
+		StaticUtil.Log("jump buffer = " + elapsedTime.TotalSeconds);
+		return elapsedTime.TotalSeconds < JUMP_BUFFER_TIME;
 	}
 }

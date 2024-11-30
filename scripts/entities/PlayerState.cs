@@ -228,6 +228,8 @@ public class PlayerFallState : PlayerState {
 			case InputEventType.UP:
 				if (player.IsJumpable())
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
+				else
+					player.SetJumpBuffer();
 				return null;
 			case InputEventType.DASH_PRESSED:
 				if (player.IsDashable())
@@ -260,7 +262,16 @@ public class PlayerDashState : PlayerState {
 		player.Dash();
     }
     public override PlayerState HandleInput(Player player, InputEventType type)
-    {
+    {	
+		switch (type) 
+		{
+			case InputEventType.UP:
+				if (player.IsJumpable())
+					return new PlayerJumpState(Player.JUMP_VELOCITY);
+				else
+					player.SetJumpBuffer();
+				break;
+		}
 		return null;
     }
 }
