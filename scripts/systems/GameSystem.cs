@@ -1,8 +1,8 @@
 using Godot;
 
 public partial class GameSystem : Node {
-    public int Level;
-    public const int HP = 5;
+    public int level;
+    public const int hp = 5;
     [Signal]
     public delegate void FruitCollectedEventHandler(int score);
     [Signal]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ckwrapth4je6q"]
 
-[ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_3vp88"]
+[ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_guaep"]
 [ext_resource type="PackedScene" uid="uid://b0tbha1wn8n2l" path="res://entities/Player.tscn" id="4_qjjpa"]
 [ext_resource type="PackedScene" uid="uid://cg7vwf7o33q3b" path="res://entities/Tilemap.tscn" id="5_gom3s"]
 [ext_resource type="PackedScene" uid="uid://cqtjkem1jq8f" path="res://entities/Start.tscn" id="6_1tu08"]
@@ -17,7 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_3vp88")
+script = ExtResource("1_guaep")
 
 [node name="Start" parent="." instance=ExtResource("6_1tu08")]
 position = Vector2(182, 400)

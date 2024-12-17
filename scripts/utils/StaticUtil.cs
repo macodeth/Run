@@ -25,4 +25,9 @@ public static class StaticUtil {
             child.QueueFree();
         }
     }
+    // random in [min, max)
+    public static int RandomIntRange (int min, int max) {
+        var rnd = new Random(DateTime.Now.Millisecond);
+        return rnd.Next(min, max);
+    }
 }

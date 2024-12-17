@@ -77,7 +77,7 @@ public partial class Player : CharacterBody2D
 		ChangeState(new PlayerAppearState());
 		_direction = MoveDirection.RIGHT;
 		_gravity = GRAVITY;
-		_hp = GameSystem.HP;
+		_hp = GameSystem.hp;
 	}
 	private void AddEventHandlers () {
 		var inputSystem = GetNode<InputSystem>(AutoLoad.INPUT_SYSTEM);
@@ -127,7 +127,7 @@ public partial class Player : CharacterBody2D
 			if (IsJumpBufferValid())
 				ChangeState(new PlayerJumpState(JUMP_VELOCITY));
 			else
-				ChangeState(new PlayerIdleState());
+				HandleEvent(EventType.ON_FLOOR);
 		}
 		if (_velocity_y > 0 && !IsOnFloor()) {
 			// fall
@@ -288,7 +288,6 @@ public partial class Player : CharacterBody2D
 	}
 	private bool IsJumpBufferValid () {
 		var elapsedTime = DateTime.Now - _jump_buffer;
-		StaticUtil.Log("jump buffer = " + elapsedTime.TotalSeconds);
 		return elapsedTime.TotalSeconds < JUMP_BUFFER_TIME;
 	}
 }

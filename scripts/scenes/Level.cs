@@ -16,10 +16,10 @@ public partial class Level : BaseScene
 
 	private void AddBackground () {
         // add static background
-
+        string[] BKGS = {"Blue", "Brown", "Gray", "Pink", "Purple", "Yellow"};
         var bkg = new TextureRect
         {
-            Texture = ResourceLoader.Load(AssetPath.TEXTURES + "Background/Brown.png") as Texture2D,
+            Texture = ResourceLoader.Load(AssetPath.TEXTURES + "Background/" + BKGS[StaticUtil.RandomIntRange(0, BKGS.Length)] + ".png") as Texture2D,
 			LayoutMode = 1,
             AnchorsPreset = (int)LayoutPreset.FullRect,
             StretchMode = TextureRect.StretchModeEnum.Tile
@@ -78,6 +78,8 @@ public partial class Level : BaseScene
         if (_is_start)
             _timer.Stop();
         AddPanelResult(true, _score, _elapsed_miliseconds);
+        var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+        SaveSystem.SaveProgress(gameSystem.level);
     }
     private void GameLostHandler () {
         if (_is_start)

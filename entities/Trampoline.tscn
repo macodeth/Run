@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bra7t3mtaiug5"]
 
-[ext_resource type="Script" path="res://scripts/entities/Trampoline.cs" id="1_6lbve"]
+[ext_resource type="Script" path="res://scripts/entities/Trampoline.cs" id="1_nwy71"]
 [ext_resource type="Texture2D" uid="uid://cp7keauloiqe7" path="res://textures/Traps/Trampoline/Jump (28x28).png" id="1_tsk10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqurp"]
@@ -182,7 +182,7 @@ _data = {
 size = Vector2(41, 4)
 
 [node name="Trampoline" type="StaticBody2D"]
-script = ExtResource("1_6lbve")
+script = ExtResource("1_nwy71")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1

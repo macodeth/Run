@@ -32,12 +32,12 @@ public partial class PanelResult : BasePopup
 	private void ClickReplay () {
 		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
 		var nodeUtil = GetNode<NodeUtil>(AutoLoad.NODE_UTIL);
-		nodeUtil.LoadLevel(gameSystem.Level);
+		nodeUtil.LoadLevel(gameSystem.level);
 	}
 	private void ClickNext () {
 		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
 		var nodeUtil = GetNode<NodeUtil>(AutoLoad.NODE_UTIL);
-		nodeUtil.LoadLevel(gameSystem.Level + 1);
+		nodeUtil.LoadLevel(gameSystem.level + 1);
 	}
 	public void SetData (bool isWin, int score, int seconds) {
 		TTime.Text = StaticUtil.TimeFormat(seconds);
@@ -49,7 +49,7 @@ public partial class PanelResult : BasePopup
 		if (!isWin)
 			BNext.Hide();
 		var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
-		if (gameSystem.Level > Selection.MAX_LEVEL)
+		if (gameSystem.level > Selection.MAX_LEVEL)
 			BNext.Hide();
 	}
 }

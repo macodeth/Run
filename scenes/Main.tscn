@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bed1aq6en3oaf"]
 
-[ext_resource type="Script" path="res://scripts/scenes/Main.cs" id="1_x1h3b"]
+[ext_resource type="Script" path="res://scripts/scenes/Main.cs" id="1_yu8jl"]
 [ext_resource type="Shader" path="res://shaders/AnimatedBkg.gdshader" id="2_1rc5k"]
 [ext_resource type="Texture2D" uid="uid://c72w1u88dl7h7" path="res://textures/Background/Green.png" id="3_rxtor"]
 [ext_resource type="FontFile" uid="uid://cpchih6j16l2y" path="res://fonts/BlackFont.png" id="4_srd2a"]
@@ -23,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_x1h3b")
+script = ExtResource("1_yu8jl")
 
 [node name="Bkg" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_omy4d")
@@ -45,9 +45,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -370.0
-offset_top = -59.0
+offset_top = -125.0
 offset_right = -202.0
-offset_bottom = -46.0
+offset_bottom = -112.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
@@ -65,10 +65,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 98.0
-offset_right = 24.0
-offset_bottom = 118.0
+offset_left = -69.0
+offset_top = 100.0
+offset_right = 5.0
+offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(4, 4)
@@ -78,7 +78,30 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_k0u85")
 theme_override_styles/hover = SubResource("StyleBoxTexture_k0u85")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_k0u85")
 theme_override_styles/focus = SubResource("StyleBoxTexture_k0u85")
-text = "PLAY"
+text = "LEVELS"
+
+[node name="BContinue" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -6.0
+offset_right = 2.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(24, 9)
+theme_override_fonts/font = ExtResource("4_srd2a")
+theme_override_styles/normal = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0u85")
+theme_override_styles/focus = SubResource("StyleBoxTexture_k0u85")
+text = "START"
 
 [node name="BQuit" type="Button" parent="."]
 texture_filter = 1
@@ -88,10 +111,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 209.0
-offset_right = 24.0
-offset_bottom = 229.0
+offset_left = -64.0
+offset_top = 212.0
+offset_right = 9.0
+offset_bottom = 232.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(4, 4)

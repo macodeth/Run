@@ -10,7 +10,7 @@ public partial class HeartHUD : Control
 	public BoxContainer HeartContainer;
 	public void Initialize () {
 		// initialize hearts
-		var heart = GameSystem.HP;
+		var heart = GameSystem.hp;
 		SetHeart(heart);
 	}
 	public void SetScore (int score) {

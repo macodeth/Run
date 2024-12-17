@@ -19,6 +19,9 @@ public partial class NodeUtil : Node {
             case SceneId.SELECTION:
                 sceneName = "Selection";
                 break;
+            case SceneId.TUTORIAL:
+                sceneName = "Tutorial";
+                break;
         }
         sceneName = AssetPath.SCENES + sceneName + ".tscn";
         LoadSceneFromFile(sceneName);
@@ -29,7 +32,7 @@ public partial class NodeUtil : Node {
         LoadSceneFromFile(sceneName);
         StaticUtil.Log("Loading " + sceneName);
         var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
-        gameSystem.Level = level;
+        gameSystem.level = level;
     }
     private void LoadSceneFromFile (string filePath) {
         var currentFilePath = GetTree().CurrentScene.SceneFilePath;

@@ -3,7 +3,8 @@ namespace Enum;
 public enum SceneId {
     LOADING,
     MAIN,
-    SELECTION
+    SELECTION,
+    TUTORIAL
 }
 
 public class AssetPath {
