@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Enum;
 using Godot;
 
-public static class StaticUtil {
+public class StaticUtil {
     public static void Log (string str) {
         Debug.WriteLine(str);
     }
@@ -29,5 +29,13 @@ public static class StaticUtil {
     public static int RandomIntRange (int min, int max) {
         var rnd = new Random(DateTime.Now.Millisecond);
         return rnd.Next(min, max);
+    }
+    private static readonly GodotObject audio = (GodotObject)GD.Load<GDScript>("res://scripts/systems/AudioSystem.gd").New();
+    public static void PlayAudio (string name) {
+        Log("play audio " + name);
+		audio.Call("play_event", name);
+    }
+    public static void StopAudio (string name) {
+        audio.Call("stop_event", name);
     }
 }

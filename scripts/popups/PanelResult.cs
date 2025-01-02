@@ -40,7 +40,7 @@ public partial class PanelResult : BasePopup
 		nodeUtil.LoadLevel(gameSystem.level + 1);
 	}
 	public void SetData (bool isWin, int score, int seconds) {
-		TTime.Text = StaticUtil.TimeFormat(seconds);
+		// TTime.Text = StaticUtil.TimeFormat(seconds);
 		if (isWin)
 			TResult.Text = "STAGE COMPLETED!";
 		else

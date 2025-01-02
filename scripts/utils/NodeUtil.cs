@@ -28,7 +28,11 @@ public partial class NodeUtil : Node {
         StaticUtil.Log("Loading " + sceneName);
     }
     public void LoadLevel (int level) {
-        var sceneName = AssetPath.SCENES + "Level" + level + ".tscn";
+        var sceneName = "";
+        if (level > 0)
+            sceneName = AssetPath.SCENES + "Level" + level + ".tscn";
+        else 
+            sceneName = AssetPath.SCENES + "Tutorial.tscn";
         LoadSceneFromFile(sceneName);
         StaticUtil.Log("Loading " + sceneName);
         var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);

@@ -6,6 +6,11 @@ public partial class BaseScene: Control {
     public override void _Ready()
     {
         AddLayers();
+        AddAudioListener();
+    }
+    private void AddAudioListener () {
+        var audio = new AudioListener2D();
+        AddChild(audio);
     }
     private Dictionary<LayerId, CanvasLayer> CanvasList = new Dictionary<LayerId, CanvasLayer>();
     private void AddLayers () {

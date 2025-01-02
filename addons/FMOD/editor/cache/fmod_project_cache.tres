@@ -1,0 +1,108 @@
+[gd_resource type="ProjectCache" load_steps=12 format=3 uid="uid://boasbpgfqvxq2"]
+
+[ext_resource type="BankAsset" uid="uid://dofhs8lwwr5b1" path="res://addons/FMOD/editor/resources/banks/{7502bcc6-127c-43b9-b668-9e893aa48dbd}.tres" id="1_nu28c"]
+[ext_resource type="BankAsset" uid="uid://eg5j41h0avv5" path="res://addons/FMOD/editor/resources/banks/{ed1f9c12-6307-0ffb-3021-1477cb578b25}.tres" id="2_11rsd"]
+[ext_resource type="BusAsset" uid="uid://bkekab7btqt40" path="res://addons/FMOD/editor/resources/busses/{b1faca19-ed84-4026-8239-54b7e18f89ff}.tres" id="3_u8445"]
+[ext_resource type="BusAsset" uid="uid://cu2s4akxnul1s" path="res://addons/FMOD/editor/resources/busses/{aec7fbf4-113c-47e5-b770-b5d8ab8d822c}.tres" id="4_xmx3r"]
+[ext_resource type="EventAsset" uid="uid://ctdoyq1cppq1x" path="res://addons/FMOD/editor/resources/events/{57c5a536-b0ad-4c28-8b60-a2bcc6644a13}.tres" id="5_x1atc"]
+[ext_resource type="EventAsset" uid="uid://drafhyl5xafss" path="res://addons/FMOD/editor/resources/events/{ea1885fe-1693-4c77-b3d6-3e24ca853280}.tres" id="6_7scp0"]
+[ext_resource type="EventAsset" uid="uid://73he8gfobc7e" path="res://addons/FMOD/editor/resources/events/{565ac546-0775-4325-b6df-2aa484477917}.tres" id="7_lkqil"]
+[ext_resource type="EventAsset" uid="uid://ccqkgxmdt701" path="res://addons/FMOD/editor/resources/events/{b5943031-feec-4a31-b5d1-ad28b321ae72}.tres" id="8_fe6cg"]
+[ext_resource type="EventAsset" uid="uid://dite43473nok6" path="res://addons/FMOD/editor/resources/events/{10973d8a-824e-403d-bef4-a2c62b4381ed}.tres" id="9_a8ihe"]
+[ext_resource type="EventAsset" uid="uid://dhsuucdjudjba" path="res://addons/FMOD/editor/resources/events/{56bf39f8-7d9c-4d12-94e8-e519b9d1495a}.tres" id="10_ohw8n"]
+
+[sub_resource type="EventAsset" id="EventAsset_8srvv"]
+is_3d = true
+min_distance = 1.0
+max_distance = 20.0
+path = "event:/Saw"
+guid = "{05b90826-e1e0-497c-a548-33c533ffa18d}"
+name = "Saw"
+
+[resource]
+banks = {
+"{7502bcc6-127c-43b9-b668-9e893aa48dbd}": ExtResource("1_nu28c"),
+"{ed1f9c12-6307-0ffb-3021-1477cb578b25}": ExtResource("2_11rsd")
+}
+events = {
+"{05b90826-e1e0-497c-a548-33c533ffa18d}": SubResource("EventAsset_8srvv"),
+"{10973d8a-824e-403d-bef4-a2c62b4381ed}": ExtResource("9_a8ihe"),
+"{565ac546-0775-4325-b6df-2aa484477917}": ExtResource("7_lkqil"),
+"{56bf39f8-7d9c-4d12-94e8-e519b9d1495a}": ExtResource("10_ohw8n"),
+"{57c5a536-b0ad-4c28-8b60-a2bcc6644a13}": ExtResource("5_x1atc"),
+"{b5943031-feec-4a31-b5d1-ad28b321ae72}": ExtResource("8_fe6cg"),
+"{ea1885fe-1693-4c77-b3d6-3e24ca853280}": ExtResource("6_7scp0")
+}
+busses = {
+"{aec7fbf4-113c-47e5-b770-b5d8ab8d822c}": ExtResource("4_xmx3r"),
+"{b1faca19-ed84-4026-8239-54b7e18f89ff}": ExtResource("3_u8445")
+}
+bank_tree = [{
+"children": [],
+"item_type": 3,
+"node_name": "Master",
+"path": "bank:/Master",
+"resource": ExtResource("1_nu28c")
+}, {
+"children": [],
+"item_type": 3,
+"node_name": "Master.strings",
+"path": "bank:/Master.strings",
+"resource": ExtResource("2_11rsd")
+}]
+event_tree = [{
+"children": [],
+"item_type": 1,
+"node_name": "Dash",
+"path": "event:/Dash",
+"resource": ExtResource("5_x1atc")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Die",
+"path": "event:/Die",
+"resource": ExtResource("6_7scp0")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Hurt",
+"path": "event:/Hurt",
+"resource": ExtResource("7_lkqil")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Jump",
+"path": "event:/Jump",
+"resource": ExtResource("8_fe6cg")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Run",
+"path": "event:/Run",
+"resource": ExtResource("9_a8ihe")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Saw",
+"path": "event:/Saw",
+"resource": SubResource("EventAsset_8srvv")
+}, {
+"children": [],
+"item_type": 1,
+"node_name": "Ting",
+"path": "event:/Ting",
+"resource": ExtResource("10_ohw8n")
+}]
+bus_tree = [{
+"children": [{
+"children": [],
+"item_type": 4,
+"node_name": "Reverb",
+"path": "bus:/Reverb",
+"resource": ExtResource("4_xmx3r")
+}],
+"item_type": 4,
+"node_name": "bus:",
+"path": "bus:/",
+"resource": ExtResource("3_u8445")
+}]

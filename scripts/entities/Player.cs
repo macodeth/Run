@@ -35,8 +35,13 @@ public partial class Player : CharacterBody2D
 	private const int TERRAIN_SET_BOUNCE = 2;
 	private int _jump_times = 0;
 	private bool _dashable = true;
-	private const double JUMP_BUFFER_TIME = 0.1;
+	private const double JUMP_BUFFER_TIME = 0.25;
+	private const double COYOTE_TIME = 0.25;
 	private DateTime _jump_buffer = new();
+	private DateTime _first_fall_time = new();
+	public void SetFirstFallTime () {
+		_first_fall_time = DateTime.Now;
+	}
 	public bool IsDashable () {
 		return _dashable;
 	}
@@ -74,7 +79,7 @@ public partial class Player : CharacterBody2D
 		_dust = GetNode<Node2D>("Dust");
 		_label = GetNode<Label>("Label");
 		_label2 = GetNode<Label>("Label2");
-		ChangeState(new PlayerAppearState());
+		ChangeState(new PlayerIdleState());
 		_direction = MoveDirection.RIGHT;
 		_gravity = GRAVITY;
 		_hp = GameSystem.hp;
@@ -134,7 +139,7 @@ public partial class Player : CharacterBody2D
 			HandleEvent(EventType.FALLING);
 		}
 		// wall jump
-		if (IsOnWall() && _state is PlayerJumpState) {
+		if (IsOnWall() && (_state is PlayerJumpState || _state is PlayerFallState)) {
 			if (!_is_on_wall_first) {
 				if (!_is_jump_from_ground)
 					_jump_times -= 1;
@@ -146,7 +151,7 @@ public partial class Player : CharacterBody2D
 		if (!IsOnWall()) {
 			_is_on_wall_first = false;
 		}
-		_label2.Text = GetSlideCollisionCount().ToString();
+		// _label2.Text = GetSlideCollisionCount().ToString();
 		for (int i = 0; i < GetSlideCollisionCount(); i++) {
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider() as Node;
@@ -179,7 +184,7 @@ public partial class Player : CharacterBody2D
     }
     public void ChangeState (PlayerState state) {
 		if (state != null) {
-			_label.Text = state.GetType().ToString();
+			// _label.Text = state.GetType().ToString();
 			_prev_state = _state;
 			_state = state;
 			_state.Enter(this);
@@ -289,5 +294,9 @@ public partial class Player : CharacterBody2D
 	private bool IsJumpBufferValid () {
 		var elapsedTime = DateTime.Now - _jump_buffer;
 		return elapsedTime.TotalSeconds < JUMP_BUFFER_TIME;
+	}
+	public bool IsCoyoteTime () {
+		var elapsedTime = DateTime.Now - _first_fall_time;
+		return elapsedTime.TotalSeconds < COYOTE_TIME;
 	}
 }

@@ -1,0 +1,28 @@
+[gd_resource type="EventAsset" load_steps=4 format=3 uid="uid://ccqkgxmdt701"]
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_ID" id="FMOD_STUDIO_PARAMETER_ID_rbj55"]
+data1 = 877140335
+data2 = 3272713310
+
+[sub_resource type="FMOD_STUDIO_PARAMETER_DESCRIPTION" id="FMOD_STUDIO_PARAMETER_DESCRIPTION_xe3hc"]
+name = "reverb"
+id = SubResource("FMOD_STUDIO_PARAMETER_ID_rbj55")
+maximum = 1.0
+guid = "{b8bbee62-f7da-4b4c-8c12-01b707efa71f}"
+
+[sub_resource type="ParameterAsset" id="ParameterAsset_gl0hl"]
+parameter_description = SubResource("FMOD_STUDIO_PARAMETER_DESCRIPTION_xe3hc")
+path = "parameter:/reverb"
+guid = "{b8bbee62-f7da-4b4c-8c12-01b707efa71f}"
+name = "reverb"
+
+[resource]
+is_oneshot = true
+min_distance = 1.0
+max_distance = 20.0
+parameters = {
+"{b8bbee62-f7da-4b4c-8c12-01b707efa71f}": SubResource("ParameterAsset_gl0hl")
+}
+path = "event:/Jump"
+guid = "{b5943031-feec-4a31-b5d1-ad28b321ae72}"
+name = "Jump"

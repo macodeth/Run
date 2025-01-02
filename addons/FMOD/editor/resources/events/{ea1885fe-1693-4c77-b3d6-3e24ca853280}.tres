@@ -1,0 +1,9 @@
+[gd_resource type="EventAsset" format=3 uid="uid://drafhyl5xafss"]
+
+[resource]
+is_oneshot = true
+min_distance = 1.0
+max_distance = 20.0
+path = "event:/Die"
+guid = "{ea1885fe-1693-4c77-b3d6-3e24ca853280}"
+name = "Die"

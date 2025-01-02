@@ -4,7 +4,7 @@ using System;
 
 public partial class Selection : BaseScene
 {
-	public readonly static int MAX_LEVEL = 3;
+	public readonly static int MAX_LEVEL = 4;
 	public override void _Ready()
 	{
 		base._Ready();

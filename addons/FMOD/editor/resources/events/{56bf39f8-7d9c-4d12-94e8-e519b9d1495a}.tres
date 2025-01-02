@@ -1,0 +1,10 @@
+[gd_resource type="EventAsset" format=3 uid="uid://dhsuucdjudjba"]
+
+[resource]
+is_3d = true
+is_oneshot = true
+min_distance = 1.0
+max_distance = 20.0
+path = "event:/Ting"
+guid = "{56bf39f8-7d9c-4d12-94e8-e519b9d1495a}"
+name = "Ting"

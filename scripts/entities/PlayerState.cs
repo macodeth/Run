@@ -105,6 +105,7 @@ public class PlayerJumpState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Jump(_initVel, _indirectForce);
+		StaticUtil.PlayAudio("Jump");
     }
 	private double _initVel = 0;
 	private bool _indirectForce = false;
@@ -159,6 +160,7 @@ public class PlayerDieState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Die();
+		StaticUtil.PlayAudio("Die");
     }
     public override PlayerState Exit(Player player)
     {
@@ -189,6 +191,7 @@ public class PlayerAppearState : PlayerState {
 public class PlayerFallState : PlayerState {
 	public override void Enter(Player player) 
 	{
+		player.SetFirstFallTime();
 		player.Fall();
 	}
 	public override PlayerState Exit(Player player) 
@@ -226,7 +229,7 @@ public class PlayerFallState : PlayerState {
 				}
 				return null;
 			case InputEventType.UP:
-				if (player.IsJumpable())
+				if (player.IsJumpable() && player.IsCoyoteTime())
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
 				else
 					player.SetJumpBuffer();
@@ -244,6 +247,7 @@ public class PlayerHitState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Hit();
+		StaticUtil.PlayAudio("Hurt");
     }
     public override PlayerState Exit(Player player)
     {
@@ -260,6 +264,7 @@ public class PlayerDashState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Dash();
+		StaticUtil.PlayAudio("Dash");
     }
     public override PlayerState HandleInput(Player player, InputEventType type)
     {	

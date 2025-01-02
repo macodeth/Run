@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckwrapth4je6q"]
+[gd_scene load_steps=10 format=3 uid="uid://ckwrapth4je6q"]
 
 [ext_resource type="Script" path="res://scripts/scenes/Level.cs" id="1_guaep"]
 [ext_resource type="PackedScene" uid="uid://b0tbha1wn8n2l" path="res://entities/Player.tscn" id="4_qjjpa"]
@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://cqddxmb10nh7s" path="res://entities/Fruit.tscn" id="7_xpcq3"]
 [ext_resource type="PackedScene" uid="uid://bra7t3mtaiug5" path="res://entities/Trampoline.tscn" id="9_pckgy"]
 [ext_resource type="PackedScene" uid="uid://vy0bng17p4r1" path="res://entities/Spike.tscn" id="10_slhro"]
+
+[sub_resource type="Curve2D" id="Curve2D_hdkko"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 438, 148, 0, 0, 0, 0, 925, 130, 0, 0, 0, 0, 689, 243, 0, 0, 0, 0, 438, 148)
+}
+point_count = 4
 
 [node name="Level1" type="Control"]
 texture_filter = 1
@@ -63,7 +69,22 @@ position = Vector2(2476, 68)
 
 [node name="Spike" parent="." instance=ExtResource("10_slhro")]
 position = Vector2(1184, 408)
+Sprite = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":1,"texture_repeat":2,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(2, 2),"skew":0.0,"texture":null,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":true,"region_rect":Rect2(0, 8, 8, 8),"region_filter_clip_enabled":false,"script":null)
+
+Shape = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 2),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":true,"one_way_collision_margin":1.0,"script":null)
+
 
 [node name="Spike2" parent="." instance=ExtResource("10_slhro")]
 position = Vector2(1544, 155)
 rotation = -1.5708
+Sprite = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":1,"texture_repeat":2,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(2, 2),"skew":0.0,"texture":null,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":true,"region_rect":Rect2(0, 8, 8, 8),"region_filter_clip_enabled":false,"script":null)
+
+Shape = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 2),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":true,"one_way_collision_margin":1.0,"script":null)
+
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_hdkko")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(438, 148)
+rotation = -0.0369442

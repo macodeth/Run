@@ -1,0 +1,8 @@
+[gd_resource type="EventAsset" format=3 uid="uid://dite43473nok6"]
+
+[resource]
+min_distance = 1.0
+max_distance = 20.0
+path = "event:/Run"
+guid = "{10973d8a-824e-403d-bef4-a2c62b4381ed}"
+name = "Run"
