@@ -162,6 +162,7 @@ layer_0/tile_data = PackedInt32Array(2424866, 196609, 5, 2359330, 196609, 3, 229
 
 [node name="Spike" parent="." instance=ExtResource("6_jxx3q")]
 position = Vector2(1608, 360)
+SpikeSize = 7
 
 [node name="Fruit" parent="." instance=ExtResource("7_7wbii")]
 position = Vector2(1902, 191)

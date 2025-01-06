@@ -47,6 +47,7 @@ public partial class Level : BaseScene
     private void FruitCollectedHandler (int score) {
         _score += score;
         _heartHUD.SetScore(_score);
+        PlayAudioHandler("Chomp");
     }
     private Timer _timer;
     private int _elapsed_miliseconds = 0;
@@ -80,11 +81,14 @@ public partial class Level : BaseScene
         AddPanelResult(true, _score, _elapsed_miliseconds);
         var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
         SaveSystem.SaveProgress(gameSystem.level);
+        gameSystem.EmitSignal(GameSystem.SignalName.StopAudio);
     }
     private void GameLostHandler () {
         if (_is_start)
             _timer.Stop();
         AddPanelResult(false, _score, _elapsed_miliseconds);
+        var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+        gameSystem.EmitSignal(GameSystem.SignalName.StopAudio);
     }
     private void HeartLostHandler (int currentHP){
         _heartHUD.SetHeart(currentHP);
@@ -99,6 +103,7 @@ public partial class Level : BaseScene
     }
     public override void _ExitTree()
     {
+        base._ExitTree();
         var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
         gameSystem.FruitCollected -= FruitCollectedHandler;
         gameSystem.GameStarted -= GameStartedHandler;

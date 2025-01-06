@@ -30,12 +30,4 @@ public class StaticUtil {
         var rnd = new Random(DateTime.Now.Millisecond);
         return rnd.Next(min, max);
     }
-    private static readonly GodotObject audio = (GodotObject)GD.Load<GDScript>("res://scripts/systems/AudioSystem.gd").New();
-    public static void PlayAudio (string name) {
-        Log("play audio " + name);
-		audio.Call("play_event", name);
-    }
-    public static void StopAudio (string name) {
-        audio.Call("stop_event", name);
-    }
 }

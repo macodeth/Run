@@ -36,6 +36,7 @@ public class GroupName {
     public const string TOP_BREAKABLE = "TopBreakable";
     public const string FRUIT = "Fruit";
     public const string CONTACT_DAMAGE = "ContactDamage";
+    public const string REVERB_ZONE = "ReverbZone";
 }
 
 public enum LayerId {

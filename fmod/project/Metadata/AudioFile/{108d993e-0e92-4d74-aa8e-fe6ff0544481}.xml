@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{108d993e-0e92-4d74-aa8e-fe6ff0544481}">
+		<property name="assetPath">
+			<value>Run/run-dirt.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.24937500000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{999c4854-66f1-4ab6-a17d-edcde85014a4}</destination>
+		</relationship>
+	</object>
+</objects>

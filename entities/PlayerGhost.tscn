@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://chvt2jdnp2e4d"]
+
+[ext_resource type="Shader" path="res://shaders/Ghost.gdshader" id="1_smd3i"]
+[ext_resource type="Texture2D" uid="uid://cbghp3fa6a8h8" path="res://textures/player/Idle (32x32).png" id="2_7tdh7"]
+[ext_resource type="Script" path="res://scripts/entities/PlayerGhost.cs" id="3_wsqs2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vx5ro"]
+shader = ExtResource("1_smd3i")
+shader_parameter/r = null
+shader_parameter/g = null
+shader_parameter/b = 5.0
+shader_parameter/mix_color = 1.0
+
+[node name="PlayerGhost" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+material = SubResource("ShaderMaterial_vx5ro")
+scale = Vector2(2, 2)
+texture = ExtResource("2_7tdh7")
+hframes = 11
+script = ExtResource("3_wsqs2")

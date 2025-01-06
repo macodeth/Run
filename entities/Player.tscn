@@ -1,7 +1,8 @@
-[gd_scene load_steps=60 format=3 uid="uid://b0tbha1wn8n2l"]
+[gd_scene load_steps=68 format=3 uid="uid://b0tbha1wn8n2l"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.cs" id="1_n2y6p"]
 [ext_resource type="Texture2D" uid="uid://pm68cwllniny" path="res://textures/player/Appearing (96x96).png" id="2_48pdx"]
+[ext_resource type="PackedScene" uid="uid://chvt2jdnp2e4d" path="res://entities/PlayerGhost.tscn" id="2_dkt76"]
 [ext_resource type="Texture2D" uid="uid://kj3d1v0doh1k" path="res://textures/player/Wall Jump (32x32).png" id="3_5fsku"]
 [ext_resource type="Texture2D" uid="uid://b26l1dn2btdtv" path="res://textures/player/Desappearing (96x96).png" id="3_vcj1i"]
 [ext_resource type="Texture2D" uid="uid://dy3ytbuyib8h7" path="res://textures/player/Fall (32x32).png" id="4_pyikb"]
@@ -9,6 +10,15 @@
 [ext_resource type="Texture2D" uid="uid://bmc7patcy2k33" path="res://textures/player/Hit (32x32).png" id="5_q0ruk"]
 [ext_resource type="Texture2D" uid="uid://b2fjcody7vkau" path="res://textures/player/Jump (32x32).png" id="5_v7tcb"]
 [ext_resource type="Texture2D" uid="uid://cmw70wbd53mnf" path="res://textures/player/Run (32x32).png" id="6_a7hj7"]
+
+[sub_resource type="Curve" id="Curve_ld34i"]
+min_value = 8.0
+max_value = 16.0
+_data = [Vector2(0, 8), 0.0, 8.0, 0, 1, Vector2(1, 16), 8.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_shcu4"]
+colors = PackedColorArray(1, 1, 1, 0.639216, 1, 1, 1, 0.341176)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7rakm"]
 atlas = ExtResource("2_48pdx")
@@ -270,7 +280,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Die",
-"speed": 10.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -304,7 +314,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Hit",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -397,15 +407,62 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fnito"]
 size = Vector2(38, 48)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="Gradient" id="Gradient_yqiw7"]
+offsets = PackedFloat32Array(0, 0.137184, 0.736462, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rfoyc"]
+gradient = SubResource("Gradient_yqiw7")
+
+[sub_resource type="Curve" id="Curve_8akbg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.132107, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.00355875), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vifxm"]
+curve = SubResource("Curve_8akbg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ln0b8"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 5, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 15.0
+emission_ring_inner_radius = 12.0
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_vifxm")
+color_ramp = SubResource("GradientTexture1D_rfoyc")
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("VFXRun", "VFXJump")]
 position = Vector2(189.458, 313.321)
 script = ExtResource("1_n2y6p")
+playerGhost = ExtResource("2_dkt76")
+VFXRun = NodePath("VFXRun")
+VFXJump = NodePath("VFXJump")
+
+[node name="VFXRun" type="CPUParticles2D" parent="."]
+position = Vector2(0, 24.679)
+emitting = false
+amount = 10
+lifetime = 0.8
+speed_scale = 0.75
+direction = Vector2(-1, 0)
+gravity = Vector2(-50, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+scale_amount_curve = SubResource("Curve_ld34i")
+color_ramp = SubResource("Gradient_shcu4")
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_k8h0q")
 animation = &"Idle"
+frame_progress = 0.979517
 speed_scale = 2.0
 
 [node name="collider" type="CollisionShape2D" parent="."]
@@ -445,9 +502,13 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
 
-[node name="Visibility" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0.542005, 7.67898)
-scale = Vector2(1.9, 2.4)
-
 [node name="Dust" type="Node2D" parent="."]
 position = Vector2(0, 31.679)
+
+[node name="VFXJump" type="GPUParticles2D" parent="."]
+position = Vector2(0, 28.679)
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_ln0b8")
+one_shot = true
+explosiveness = 1.0

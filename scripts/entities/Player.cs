@@ -8,8 +8,13 @@ public partial class Player : CharacterBody2D
 	public int HP {
 		get => _hp;
 	}
+	[Export]
+	private PackedScene playerGhost;
+	[Export]
+	public CpuParticles2D VFXRun;
+	[Export]
+	public GpuParticles2D VFXJump;
 	private AnimatedSprite2D _anim;
-	private Node2D _dust;
 	private Label _label;
 	public Label _label2;
 	private PlayerState _state;
@@ -25,13 +30,13 @@ public partial class Player : CharacterBody2D
 	private const double MOVE_VELOCITY = 300f;
 	private const double DASH_VELOCITY = 800f;
 	private const double MAX_DASH_TIME = 0.25f;
-	private double dash_time = 0;
+	private double _dash_time = 0;
 	public const double JUMP_VELOCITY = - 400f;
 	private const double GRAVITY = 1200f;
 	private const double JERK = 2000f;
 	private const double INVULNERABILITY_PERIOD = 0.5;
 	// move slower while in the air
-	private double MOVE_VELOCITY_AIR_RATIO = 0.7;
+	private const double MOVE_VELOCITY_AIR_RATIO = 0.7;
 	private const int TERRAIN_SET_BOUNCE = 2;
 	private int _jump_times = 0;
 	private bool _dashable = true;
@@ -39,8 +44,11 @@ public partial class Player : CharacterBody2D
 	private const double COYOTE_TIME = 0.25;
 	private DateTime _jump_buffer = new();
 	private DateTime _first_fall_time = new();
+	private const float DASH_GHOST_DISTANCE = 60;
+	private float _dash_ghost_pos = 0;
 	public void SetFirstFallTime () {
-		_first_fall_time = DateTime.Now;
+		if (_prev_state is not PlayerFallState)
+			_first_fall_time = DateTime.Now;
 	}
 	public bool IsDashable () {
 		return _dashable;
@@ -67,6 +75,8 @@ public partial class Player : CharacterBody2D
 	{
 		Initialize();
 		AddEventHandlers();
+		var audioListener = new AudioListener2D();
+        AddChild(audioListener);
 	}
     public override void _ExitTree()
     {
@@ -76,7 +86,6 @@ public partial class Player : CharacterBody2D
     private void Initialize () {
 		AddToGroup(GroupName.PLAYER);
 		_anim = GetNode<AnimatedSprite2D>("sprite");
-		_dust = GetNode<Node2D>("Dust");
 		_label = GetNode<Label>("Label");
 		_label2 = GetNode<Label>("Label2");
 		ChangeState(new PlayerIdleState());
@@ -106,14 +115,26 @@ public partial class Player : CharacterBody2D
 		if (_gravity > GRAVITY)
 			_gravity = GRAVITY;
 		_velocity_y += _gravity * delta;
-		Velocity = new Vector2((float)velocity_x, 
-			(_state is PlayerDashState) ? 0 : (float)_velocity_y);
+		Velocity = new Vector2(
+			(_state is PlayerHitState)?0 : (float)velocity_x, 
+			(_state is PlayerDashState || _state is PlayerHitState || _state is PlayerDieState) ? 0 : (float)_velocity_y);
 		MoveAndSlide();
 		// dash
 		if (_state is PlayerDashState) {
-			dash_time += delta;
-			if (dash_time > MAX_DASH_TIME) {
-				dash_time = 0;
+			_dash_time += delta;
+			float currentPos = Position.X;
+			double distance = Math.Abs(currentPos - _dash_ghost_pos);
+			if (distance > DASH_GHOST_DISTANCE) {
+				StaticUtil.Log("spawn dash ghost");
+				_dash_ghost_pos = currentPos;
+				var dashGhost = playerGhost.Instantiate() as PlayerGhost;
+				dashGhost.SetDirection(_direction == MoveDirection.LEFT);
+				GetParent().AddChild(dashGhost);
+				dashGhost.Position = Position;
+			}
+			if (_dash_time > MAX_DASH_TIME) {
+				_dash_time = 0;
+				_velocity_x = 0;
 				if (IsOnFloor()) {
 					if (IsJumpBufferValid())
 						ChangeState(new PlayerJumpState(JUMP_VELOCITY));
@@ -151,7 +172,6 @@ public partial class Player : CharacterBody2D
 		if (!IsOnWall()) {
 			_is_on_wall_first = false;
 		}
-		// _label2.Text = GetSlideCollisionCount().ToString();
 		for (int i = 0; i < GetSlideCollisionCount(); i++) {
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider() as Node;
@@ -187,6 +207,7 @@ public partial class Player : CharacterBody2D
 			// _label.Text = state.GetType().ToString();
 			_prev_state = _state;
 			_state = state;
+			VFXRun.Emitting = false;
 			_state.Enter(this);
 		}
 	}
@@ -221,21 +242,11 @@ public partial class Player : CharacterBody2D
 		if (indirectForce) return;
 
 		// player presses jump button
-
 		_jump_times += 1;
-		var scene = ResourceLoader.Load(AssetPath.ENTITIES + "VFX.tscn") as PackedScene;
-		var vfx = scene.Instantiate() as AnimatedSprite2D;
-		var globalPoint = ToGlobal(_dust.Position);
-		vfx.Position = globalPoint;
-		GetParent().AddChild(vfx);
-		vfx.Play("Jump");
-		vfx.AnimationFinished += () => {
-			if (vfx.Animation == "Jump")
-			vfx.QueueFree();
-		};
 	}
 	public void Dash () {
 		SetDashVelocity(true);
+		_dash_ghost_pos = Position.X;
 		_anim.Play("Dash");
 		_dashable = false;
 	}
@@ -292,11 +303,20 @@ public partial class Player : CharacterBody2D
 		_jump_buffer = DateTime.Now;
 	}
 	private bool IsJumpBufferValid () {
+		if (_state is PlayerHitState || _state is PlayerDieState) return false;
 		var elapsedTime = DateTime.Now - _jump_buffer;
 		return elapsedTime.TotalSeconds < JUMP_BUFFER_TIME;
 	}
 	public bool IsCoyoteTime () {
 		var elapsedTime = DateTime.Now - _first_fall_time;
+		StaticUtil.Log(elapsedTime.ToString());
 		return elapsedTime.TotalSeconds < COYOTE_TIME;
 	}
+	public void SetMaxMinus1Jump () {
+		_jump_times = MAX_JUMP - 1;
+	}
+    public void PlayAudio (string name) {
+        var gameSystem = GetNode<GameSystem>(AutoLoad.GAME_SYSTEM);
+        gameSystem.EmitSignal(GameSystem.SignalName.PlayAudio, name);
+    }
 }

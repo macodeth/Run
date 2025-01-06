@@ -9,7 +9,7 @@ public abstract class PlayerState
 		return null;
 	}
 	public virtual PlayerState HandleEvent (EventType type) {
-		return this;
+		return null;
 	}
 	public abstract void Enter (Player player);
 	public virtual PlayerState Exit (Player player) {
@@ -48,7 +48,7 @@ public class PlayerIdleState : PlayerState {
 			case EventType.FALLING:
 				return new PlayerFallState();
 		}
-		return this;
+		return null;
     }
 }
 
@@ -56,6 +56,14 @@ public class PlayerRunState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Run();
+		player.VFXRun.Emitting = true;
+		if (_direction == MoveDirection.RIGHT) {
+			player.VFXRun.Gravity = new Vector2(-50, 0);
+			player.VFXRun.Direction = new Vector2(-1, 0);
+		} else {
+			player.VFXRun.Gravity = new Vector2(50, 0);
+			player.VFXRun.Direction = new Vector2(1, 0);
+		}
 		player.Direction = _direction;
     }
 	private MoveDirection _direction;
@@ -97,15 +105,17 @@ public class PlayerRunState : PlayerState {
 			case EventType.FALLING:
 				return new PlayerFallState();
 		}
-		return this;
+		return null;
     }
 }
 
 public class PlayerJumpState : PlayerState {
     public override void Enter(Player player)
     {
+		player.VFXJump.Restart();
+		player.VFXJump.Emitting = true;
 		player.Jump(_initVel, _indirectForce);
-		StaticUtil.PlayAudio("Jump");
+		player.PlayAudio("Jump");
     }
 	private double _initVel = 0;
 	private bool _indirectForce = false;
@@ -152,7 +162,7 @@ public class PlayerJumpState : PlayerState {
 			case EventType.FALLING:
 				return new PlayerFallState();
 		}
-		return this;
+		return null;
     }
 }
 
@@ -160,31 +170,12 @@ public class PlayerDieState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Die();
-		StaticUtil.PlayAudio("Die");
+		player.PlayAudio("Die");
     }
     public override PlayerState Exit(Player player)
     {
 		player.EndGame();
 		return null;
-    }
-}
-
-public class PlayerAppearState : PlayerState {
-    public override void Enter(Player player)
-    {
-		player.Appear();
-    }
-    public override PlayerState Exit(Player player)
-    {
-		return new PlayerIdleState();
-    }
-	public override PlayerState HandleEvent(EventType type)
-    {
-		switch (type) {
-			case EventType.FALLING:
-				return new PlayerFallState();
-		}
-		return this;
     }
 }
 
@@ -204,7 +195,7 @@ public class PlayerFallState : PlayerState {
 			case EventType.ON_FLOOR:
 				return new PlayerIdleState();
 		}
-		return this;
+		return null;
     }
 	public override PlayerState HandleInput (Player player, InputEventType type) {
 		switch (type) {
@@ -229,8 +220,11 @@ public class PlayerFallState : PlayerState {
 				}
 				return null;
 			case InputEventType.UP:
-				if (player.IsJumpable() && player.IsCoyoteTime())
+				if (player.IsJumpable()) {
+					if (!player.IsCoyoteTime())
+						player.SetMaxMinus1Jump();
 					return new PlayerJumpState(Player.JUMP_VELOCITY);
+				}
 				else
 					player.SetJumpBuffer();
 				return null;
@@ -247,7 +241,7 @@ public class PlayerHitState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Hit();
-		StaticUtil.PlayAudio("Hurt");
+		player.PlayAudio("Hurt");
     }
     public override PlayerState Exit(Player player)
     {
@@ -264,7 +258,7 @@ public class PlayerDashState : PlayerState {
     public override void Enter(Player player)
     {
 		player.Dash();
-		StaticUtil.PlayAudio("Dash");
+		player.PlayAudio("Dash");
     }
     public override PlayerState HandleInput(Player player, InputEventType type)
     {	
