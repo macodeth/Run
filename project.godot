@@ -26,6 +26,7 @@ NodeUtil="*res://scripts/utils/NodeUtil.cs"
 
 window/size/viewport_width=1000
 window/size/viewport_height=600
+window/size/mode=3
 window/size/resizable=false
 
 [dotnet]

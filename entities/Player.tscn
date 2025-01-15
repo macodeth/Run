@@ -314,7 +314,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Hit",
-"speed": 10.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -462,7 +462,6 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_k8h0q")
 animation = &"Idle"
-frame_progress = 0.979517
 speed_scale = 2.0
 
 [node name="collider" type="CollisionShape2D" parent="."]

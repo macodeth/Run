@@ -13,6 +13,8 @@ public partial class SawPath : Path2D
 	private LoopType type;
 	[Export]
 	private double duration;
+	[Export]
+	private double speed;
 	public override void _Ready()
 	{
 		_pathFollow = GetNode<PathFollow2D>("PathFollow2D");
@@ -26,7 +28,7 @@ public partial class SawPath : Path2D
     public override void _Process(double delta)
     {
 		if (type == LoopType.CIRCULAR)
-			_pathFollow.ProgressRatio += (float)delta;
+			_pathFollow.ProgressRatio += (float)(delta * speed);
     }
 
 }
